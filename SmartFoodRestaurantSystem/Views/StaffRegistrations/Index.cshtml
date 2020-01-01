@@ -1,0 +1,83 @@
+﻿@model IEnumerable<SmartFoodRestaurantSystem.Models.StaffRegistration>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffCnic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffPhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffJobStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffJobEndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffRole)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffShiftTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Admin)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StaffName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StaffAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StaffCnic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StaffPhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StaffJobStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StaffJobEndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StaffRole)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StaffShiftTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Admin.AdminId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.StaffId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.StaffId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.StaffId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

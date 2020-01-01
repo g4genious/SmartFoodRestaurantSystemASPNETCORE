@@ -1,0 +1,59 @@
+﻿@model SmartFoodRestaurantSystem.Models.OrderMenu
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>OrderMenu</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MenuId" />
+            <div class="form-group">
+                <label asp-for="MenuName" class="control-label"></label>
+                <input asp-for="MenuName" class="form-control" />
+                <span asp-validation-for="MenuName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MenuDescription" class="control-label"></label>
+                <input asp-for="MenuDescription" class="form-control" />
+                <span asp-validation-for="MenuDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MenuPriceHalf" class="control-label"></label>
+                <input asp-for="MenuPriceHalf" class="form-control" />
+                <span asp-validation-for="MenuPriceHalf" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MenuPriceFull" class="control-label"></label>
+                <input asp-for="MenuPriceFull" class="form-control" />
+                <span asp-validation-for="MenuPriceFull" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MenuQuantity" class="control-label"></label>
+                <input asp-for="MenuQuantity" class="form-control" />
+                <span asp-validation-for="MenuQuantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TableId" class="control-label"></label>
+                <select asp-for="TableId" class="form-control" asp-items="ViewBag.TableId"></select>
+                <span asp-validation-for="TableId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

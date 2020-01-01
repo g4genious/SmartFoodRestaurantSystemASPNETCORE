@@ -9,7 +9,7 @@ using SmartFoodRestaurantSystem.Models;
 
 namespace SmartFoodRestaurantSystem.Data.Migrations
 {
-    [DbContext(typeof(SmartFoodResturantContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

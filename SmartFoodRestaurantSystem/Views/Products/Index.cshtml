@@ -1,0 +1,89 @@
+﻿@model IEnumerable<SmartFoodRestaurantSystem.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductQuantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductReceivedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductReceivedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductReturnDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductReturnBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductUpdatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductUpdatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Supplier)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductQuantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductReceivedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductReceivedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductReturnDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductReturnBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductUpdatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductUpdatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Supplier.SupplierId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

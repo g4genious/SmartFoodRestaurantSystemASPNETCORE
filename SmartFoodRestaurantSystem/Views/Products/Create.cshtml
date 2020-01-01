@@ -1,0 +1,77 @@
+﻿@model SmartFoodRestaurantSystem.Models.Product
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProductName" class="control-label"></label>
+                <input asp-for="ProductName" class="form-control" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductQuantity" class="control-label"></label>
+                <input asp-for="ProductQuantity" class="form-control" />
+                <span asp-validation-for="ProductQuantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductPrice" class="control-label"></label>
+                <input asp-for="ProductPrice" class="form-control" />
+                <span asp-validation-for="ProductPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductReceivedDate" class="control-label"></label>
+                <input asp-for="ProductReceivedDate" class="form-control" />
+                <span asp-validation-for="ProductReceivedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductReceivedBy" class="control-label"></label>
+                <input asp-for="ProductReceivedBy" class="form-control" />
+                <span asp-validation-for="ProductReceivedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductReturnDate" class="control-label"></label>
+                <input asp-for="ProductReturnDate" class="form-control" />
+                <span asp-validation-for="ProductReturnDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductReturnBy" class="control-label"></label>
+                <input asp-for="ProductReturnBy" class="form-control" />
+                <span asp-validation-for="ProductReturnBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductUpdatedDate" class="control-label"></label>
+                <input asp-for="ProductUpdatedDate" class="form-control" />
+                <span asp-validation-for="ProductUpdatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductUpdatedBy" class="control-label"></label>
+                <input asp-for="ProductUpdatedBy" class="form-control" />
+                <span asp-validation-for="ProductUpdatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SupplierId" class="control-label"></label>
+                <select asp-for="SupplierId" class ="form-control" asp-items="ViewBag.SupplierId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

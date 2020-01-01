@@ -5,10 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using SmartFoodRestaurantSystem.Models;
 
 namespace SmartFoodRestaurantSystem.Data.Migrations
 {
-    [DbContext(typeof(SmartFoodRestaurantSystemContext))]
+    [DbContext(typeof(SmartFoodResturantContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

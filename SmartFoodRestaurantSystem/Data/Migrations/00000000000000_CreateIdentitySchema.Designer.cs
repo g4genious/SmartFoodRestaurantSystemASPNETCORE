@@ -6,10 +6,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using SmartFoodRestaurantSystem.Models;
 
 namespace SmartFoodRestaurantSystem.Data.Migrations
 {
-    [DbContext(typeof(SmartFoodRestaurantSystemContext))]
+    [DbContext(typeof(SmartFoodResturantContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {

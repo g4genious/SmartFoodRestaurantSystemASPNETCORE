@@ -1,0 +1,53 @@
+﻿@model IEnumerable<SmartFoodRestaurantSystem.Models.OrderDetail>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    .card {
+        width: 200px;
+        border: 1px solid yellow;
+        background-color:black;
+    }
+    .card-header{
+        background-color:black;
+    }
+    p , h6 {
+        color: white;
+    }
+</style>
+<div class="container-fluid">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-12">    
+                        <body style="background-color: black" onload="Javascript: loadref(10000)">
+                            <div class="card-deck">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="row">
+                                        <div class="card parent_div">
+                                            <div  class="card-header">
+                                                <h6  class="card-title">Order</h6>
+                                            </div>
+
+                                            <div class="card-body">
+                                                <p>   @Html.DisplayNameFor(model => model.Name) :     @Html.DisplayFor(modelItem => item.Name)</p>
+                                                <p>    @Html.DisplayNameFor(model => model.Quantity) :    @Html.DisplayFor(modelItem => item.Quantity)</p>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </body>
+                    </div>
+                </div>
+            </div>
+    
+      
+<script type="text/javascript">
+    function loadref(time) {
+        setTimeout("location.reload(true);", time);
+    }
+</script>

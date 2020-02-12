@@ -12,6 +12,7 @@ using SmartFoodRestaurantSystem.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SmartFoodRestaurantSystem.Models;
 
 namespace SmartFoodRestaurantSystem
 {
@@ -30,9 +31,18 @@ namespace SmartFoodRestaurantSystem
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<SmartResturantContext>(options =>
+               options.UseSqlServer(
+                   Configuration.GetConnectionString("Connection")));
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+            services.AddRazorPages();
+            services.AddSession();
+            services.AddMemoryCache();
+            services.AddDistributedMemoryCache();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
         }
 
@@ -54,15 +64,15 @@ namespace SmartFoodRestaurantSystem
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Users}/{action=Login}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

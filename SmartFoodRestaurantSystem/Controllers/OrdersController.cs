@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,18 +12,55 @@ namespace SmartFoodRestaurantSystem.Controllers
 {
     public class OrdersController : Controller
     {
-        private readonly SmartFoodResturantContext _context;
+        private readonly SmartResturantContext _context;
 
-        public OrdersController(SmartFoodResturantContext context)
+        public OrdersController(SmartResturantContext context)
         {
             _context = context;
         }
 
+        [HttpGet]
+        public IActionResult DinningTables()
+        {
+            return View();
+        }
+        // GET: GoingOrders
+        public async Task<IActionResult> GoingOrder()
+        {
+            return View(await _context.Order.ToListAsync());
+        }
+
+
+
+
+
+        public IActionResult DinningTablesPost(int id)
+        {
+            HttpContext.Session.SetInt32("TableNumber", id);
+            return RedirectToAction("Create", "Customers");
+        }
+
+        public IActionResult Show(int id)
+        {
+            IList<OrderDetailViewDB> Details = (from d in _context.OrderDetail
+                                                where id == d.OrderId
+                                                select new OrderDetailViewDB
+                                                {
+                                                    Name = d.Name,
+                                                    Quantity = d.Quantity,
+                                                    Price = d.Price,
+                                                    SubTotal = d.SubTotal
+
+                                                }).ToList<OrderDetailViewDB>();
+
+            return View(Details);
+        }
+
+
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var smartFoodResturantContext = _context.Order.Include(o => o.Menu).Include(o => o.Table);
-            return View(await smartFoodResturantContext.ToListAsync());
+            return View(await _context.Order.ToListAsync());
         }
 
         // GET: Orders/Details/5
@@ -34,9 +72,7 @@ namespace SmartFoodRestaurantSystem.Controllers
             }
 
             var order = await _context.Order
-                .Include(o => o.Menu)
-                .Include(o => o.Table)
-                .FirstOrDefaultAsync(m => m.OrderId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (order == null)
             {
                 return NotFound();
@@ -45,32 +81,28 @@ namespace SmartFoodRestaurantSystem.Controllers
             return View(order);
         }
 
+
         // GET: Orders/Create
         public IActionResult Create()
         {
-            ViewData["MenuId"] = new SelectList(_context.OrderMenu, "MenuId", "MenuId");
-            ViewData["TableId"] = new SelectList(_context.OrderTable, "TableId", "TableId");
             return View();
         }
-
-        // POST: Orders/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderId,TableId,MenuId")] Order order)
+        public async Task<IActionResult> Create(Order order)
         {
+
             if (ModelState.IsValid)
             {
+                order.TableNumber = HttpContext.Session.GetInt32("TableNumber");
+                order.Date = DateTime.Now;
                 _context.Add(order);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                HttpContext.Session.SetString("id", order.Id.ToString());
+                return RedirectToAction("Tablet", "Produces");
             }
-            ViewData["MenuId"] = new SelectList(_context.OrderMenu, "MenuId", "MenuId", order.MenuId);
-            ViewData["TableId"] = new SelectList(_context.OrderTable, "TableId", "TableId", order.TableId);
             return View(order);
         }
-
         // GET: Orders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -84,8 +116,6 @@ namespace SmartFoodRestaurantSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["MenuId"] = new SelectList(_context.OrderMenu, "MenuId", "MenuId", order.MenuId);
-            ViewData["TableId"] = new SelectList(_context.OrderTable, "TableId", "TableId", order.TableId);
             return View(order);
         }
 
@@ -94,9 +124,9 @@ namespace SmartFoodRestaurantSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderId,TableId,MenuId")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,SubTotal,Quantity,TableNumber,Date,ProduceId")] Order order)
         {
-            if (id != order.OrderId)
+            if (id != order.Id)
             {
                 return NotFound();
             }
@@ -110,7 +140,7 @@ namespace SmartFoodRestaurantSystem.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OrderExists(order.OrderId))
+                    if (!OrderExists(order.Id))
                     {
                         return NotFound();
                     }
@@ -121,8 +151,6 @@ namespace SmartFoodRestaurantSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MenuId"] = new SelectList(_context.OrderMenu, "MenuId", "MenuId", order.MenuId);
-            ViewData["TableId"] = new SelectList(_context.OrderTable, "TableId", "TableId", order.TableId);
             return View(order);
         }
 
@@ -135,9 +163,7 @@ namespace SmartFoodRestaurantSystem.Controllers
             }
 
             var order = await _context.Order
-                .Include(o => o.Menu)
-                .Include(o => o.Table)
-                .FirstOrDefaultAsync(m => m.OrderId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (order == null)
             {
                 return NotFound();
@@ -159,7 +185,7 @@ namespace SmartFoodRestaurantSystem.Controllers
 
         private bool OrderExists(int id)
         {
-            return _context.Order.Any(e => e.OrderId == id);
+            return _context.Order.Any(e => e.Id == id);
         }
     }
 }

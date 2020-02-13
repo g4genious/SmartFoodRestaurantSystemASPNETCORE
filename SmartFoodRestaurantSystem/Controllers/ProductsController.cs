@@ -11,9 +11,9 @@ namespace SmartFoodRestaurantSystem.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly SmartFoodResturantContext _context;
+        private readonly SmartResturantContext _context;
 
-        public ProductsController(SmartFoodResturantContext context)
+        public ProductsController(SmartResturantContext context)
         {
             _context = context;
         }
@@ -21,8 +21,8 @@ namespace SmartFoodRestaurantSystem.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var smartFoodResturantContext = _context.Product.Include(p => p.Supplier);
-            return View(await smartFoodResturantContext.ToListAsync());
+            var smartResturantContext = _context.Product.Include(p => p.Category);
+            return View(await smartResturantContext.ToListAsync());
         }
 
         // GET: Products/Details/5
@@ -34,8 +34,8 @@ namespace SmartFoodRestaurantSystem.Controllers
             }
 
             var product = await _context.Product
-                .Include(p => p.Supplier)
-                .FirstOrDefaultAsync(m => m.ProductId == id);
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
                 return NotFound();
@@ -47,7 +47,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["SupplierId"] = new SelectList(_context.SupplierRegistration, "SupplierId", "SupplierId");
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id");
             return View();
         }
 
@@ -56,7 +56,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,ProductName,ProductQuantity,ProductPrice,ProductReceivedDate,ProductReceivedBy,ProductReturnDate,ProductReturnBy,ProductUpdatedDate,ProductUpdatedBy,SupplierId")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,Name,Unit,Date,SupplierId,CategoryId")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace SmartFoodRestaurantSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SupplierId"] = new SelectList(_context.SupplierRegistration, "SupplierId", "SupplierId", product.SupplierId);
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id", product.CategoryId);
             return View(product);
         }
 
@@ -81,7 +81,7 @@ namespace SmartFoodRestaurantSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["SupplierId"] = new SelectList(_context.SupplierRegistration, "SupplierId", "SupplierId", product.SupplierId);
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id", product.CategoryId);
             return View(product);
         }
 
@@ -90,9 +90,9 @@ namespace SmartFoodRestaurantSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,ProductQuantity,ProductPrice,ProductReceivedDate,ProductReceivedBy,ProductReturnDate,ProductReturnBy,ProductUpdatedDate,ProductUpdatedBy,SupplierId")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Unit,Date,SupplierId,CategoryId")] Product product)
         {
-            if (id != product.ProductId)
+            if (id != product.Id)
             {
                 return NotFound();
             }
@@ -106,7 +106,7 @@ namespace SmartFoodRestaurantSystem.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.ProductId))
+                    if (!ProductExists(product.Id))
                     {
                         return NotFound();
                     }
@@ -117,7 +117,7 @@ namespace SmartFoodRestaurantSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SupplierId"] = new SelectList(_context.SupplierRegistration, "SupplierId", "SupplierId", product.SupplierId);
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id", product.CategoryId);
             return View(product);
         }
 
@@ -130,8 +130,8 @@ namespace SmartFoodRestaurantSystem.Controllers
             }
 
             var product = await _context.Product
-                .Include(p => p.Supplier)
-                .FirstOrDefaultAsync(m => m.ProductId == id);
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
                 return NotFound();
@@ -153,7 +153,7 @@ namespace SmartFoodRestaurantSystem.Controllers
 
         private bool ProductExists(int id)
         {
-            return _context.Product.Any(e => e.ProductId == id);
+            return _context.Product.Any(e => e.Id == id);
         }
     }
 }

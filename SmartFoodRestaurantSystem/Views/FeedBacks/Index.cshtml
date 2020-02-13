@@ -13,41 +13,42 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FeedBackDescription)
+                @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FeedBackEnvironment)
+                @Html.DisplayNameFor(model => model.Environment)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FeedBackStaffBehaviour)
+                @Html.DisplayNameFor(model => model.Staff)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customer)
+                @Html.DisplayNameFor(model => model.Food)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FeedBackDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FeedBackEnvironment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FeedBackStaffBehaviour)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.CustomerId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.FeedBackId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FeedBackId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FeedBackId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Environment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Staff)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Food)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -1,0 +1,112 @@
+﻿@model SmartFoodRestaurantSystem.Models.ProduceViewClass
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="container-fluid">
+
+    <div class="card o-hidden border-0 shadow-lg my-2 border-left-success">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Add Menu!</h1>
+                        </div>
+                        <form enctype="multipart/form-data" asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group row">
+                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                    <label asp-for="Name" class="control-label"></label>
+                                    <input asp-for="Name" class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="Photo" class="control-label"></label>
+                                    <div class="custom-file">
+                                        <input asp-for="Photo" class="form-control custom-file-input" />
+                                        <label class="custom-file-label">Choose File ...</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="Status" class="control-label"></label>
+                                    <input asp-for="Status" class="form-control" />
+                                    <span asp-validation-for="Status" class="text-danger"></span>
+                                </div>
+
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label asp-for="Description" class="control-label"></label>
+                                    <input asp-for="Description" class="form-control" />
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label asp-for="PriceFull" class="control-label"></label>
+                                        <input asp-for="PriceFull" class="form-control" />
+                                        <span asp-validation-for="PriceFull" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                    <label asp-for="CreatedBy" class="control-label"></label>
+                                    <input asp-for="CreatedBy" class="form-control" />
+                                    <span asp-validation-for="CreatedBy" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="CreatedDate" class="control-label"></label>
+                                    <input asp-for="CreatedDate" class="form-control" />
+                                    <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label asp-for="UpdatedBy" class="control-label"></label>
+                                        <input asp-for="UpdatedBy" class="form-control" />
+                                        <span asp-validation-for="UpdatedBy" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="UpdatedDate" class="control-label"></label>
+                                    <input asp-for="UpdatedDate" class="form-control" />
+                                    <span asp-validation-for="UpdatedDate" class="text-danger"></span>
+                                </div>
+                                </div>
+                                @*<div class="col-sm-6">
+            <label asp-for="PriceHalf" class="control-label"></label>
+            <input asp-for="PriceHalf" class="form-control" />
+            <span asp-validation-for="PriceHalf" class="text-danger"></span>
+        </div>*@
+                                <div class="form-group">
+                                    <input type="submit" value="Create" class="btn btn-success" />
+                                </div>
+</form>
+
+                    </div></div></div></div></div></div>
+
+                                    
+                          
+
+
+                        @section Scripts {
+                            <script>
+                                $(document).ready(function () {
+                                    $('.custom-file-input').on("change", function () {
+                                        var filename = $(this).val().split("\\").pop();
+                                        $(this).next(".custom-file-label").html(filename);
+                                    });
+                                });
+                            </script>
+                        }

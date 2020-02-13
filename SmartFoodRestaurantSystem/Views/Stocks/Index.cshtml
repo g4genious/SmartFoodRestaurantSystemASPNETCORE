@@ -13,83 +13,66 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.StockAddedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StockAddedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StockModifiedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StockModifiedBy)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.UnitPrice)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TotalAmount)
+                @Html.DisplayNameFor(model => model.ProductId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductType)
+                @Html.DisplayNameFor(model => model.SupplierId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CurrentStock)
+                @Html.DisplayNameFor(model => model.CategoryId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Admin)
+                @Html.DisplayNameFor(model => model.AddedBy)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product)
+                @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Supplier)
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpiryDate)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.StockAddedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StockAddedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StockModifiedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StockModifiedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UnitPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CurrentStock)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Admin.AdminId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.ProductId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Supplier.SupplierId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.StockId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.StockId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.StockId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SupplierId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpiryDate)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

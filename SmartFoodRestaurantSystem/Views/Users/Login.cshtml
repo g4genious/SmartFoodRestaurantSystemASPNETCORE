@@ -1,0 +1,84 @@
+﻿@model SmartFoodRestaurantSystem.Models.User
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+
+
+<body class="bg-gradient-success">
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+
+                            <div class="col-lg-12 d-none d-lg-block bg-login-image"> </div>
+                            <div class="col-lg-5">
+
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Wellcome!</h1>
+                                    </div>
+                                    <form class="user" asp-action="Login">
+                                        <div class="form-group">
+                                            <label  class="control-label">Username</label>
+                                            <input asp-for="Name" style="border-radius: 0" class="form-control " id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Username..." tabindex="1" autofocus>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Password" class="control-label"></label>
+                                            <input asp-for="Password" style="border-radius: 0" type="password" class="form-control " id="exampleInputPassword" placeholder="Password" tabindex="2">
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Role" class="control-label"></label>
+                                            <select class="form-control" style="border-radius: 0" asp-for="Role">
+                                                <option  value="Admin">Admin</option>
+                                                <option  value="Tablet">Tablet</option>
+                                                <option  value="Kitchen">Kitchen</option>
+                                            </select>
+                                            <span asp-validation-for="Role" class="text-danger"></span>
+                                        </div>
+                                      
+
+                                        <div class="form-group">
+                                            <input type="submit" value="Login" class="btn btn-success btn-user btn-block" />
+                                        </div>
+
+
+                                    </form>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+   
+
+</body>
+
+
+
+
+
+          
+        
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

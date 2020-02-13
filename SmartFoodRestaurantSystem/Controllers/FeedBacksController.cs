@@ -11,9 +11,9 @@ namespace SmartFoodRestaurantSystem.Controllers
 {
     public class FeedBacksController : Controller
     {
-        private readonly SmartFoodResturantContext _context;
+        private readonly SmartResturantContext _context;
 
-        public FeedBacksController(SmartFoodResturantContext context)
+        public FeedBacksController(SmartResturantContext context)
         {
             _context = context;
         }
@@ -21,8 +21,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         // GET: FeedBacks
         public async Task<IActionResult> Index()
         {
-            var smartFoodResturantContext = _context.FeedBack.Include(f => f.Customer);
-            return View(await smartFoodResturantContext.ToListAsync());
+            return View(await _context.FeedBack.ToListAsync());
         }
 
         // GET: FeedBacks/Details/5
@@ -34,8 +33,7 @@ namespace SmartFoodRestaurantSystem.Controllers
             }
 
             var feedBack = await _context.FeedBack
-                .Include(f => f.Customer)
-                .FirstOrDefaultAsync(m => m.FeedBackId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (feedBack == null)
             {
                 return NotFound();
@@ -47,7 +45,6 @@ namespace SmartFoodRestaurantSystem.Controllers
         // GET: FeedBacks/Create
         public IActionResult Create()
         {
-            ViewData["CustomerId"] = new SelectList(_context.CustomerRegistration, "CustomerId", "CustomerId");
             return View();
         }
 
@@ -56,7 +53,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FeedBackId,FeedBackDescription,FeedBackEnvironment,FeedBackStaffBehaviour,CustomerId")] FeedBack feedBack)
+        public async Task<IActionResult> Create([Bind("Id,Description,Environment,Staff,Food")] FeedBack feedBack)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +61,6 @@ namespace SmartFoodRestaurantSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.CustomerRegistration, "CustomerId", "CustomerId", feedBack.CustomerId);
             return View(feedBack);
         }
 
@@ -81,7 +77,6 @@ namespace SmartFoodRestaurantSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["CustomerId"] = new SelectList(_context.CustomerRegistration, "CustomerId", "CustomerId", feedBack.CustomerId);
             return View(feedBack);
         }
 
@@ -90,9 +85,9 @@ namespace SmartFoodRestaurantSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FeedBackId,FeedBackDescription,FeedBackEnvironment,FeedBackStaffBehaviour,CustomerId")] FeedBack feedBack)
+        public async Task<IActionResult> Edit(int? id, [Bind("Id,Description,Environment,Staff,Food")] FeedBack feedBack)
         {
-            if (id != feedBack.FeedBackId)
+            if (id != feedBack.Id)
             {
                 return NotFound();
             }
@@ -106,7 +101,7 @@ namespace SmartFoodRestaurantSystem.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FeedBackExists(feedBack.FeedBackId))
+                    if (!FeedBackExists(feedBack.Id))
                     {
                         return NotFound();
                     }
@@ -117,7 +112,6 @@ namespace SmartFoodRestaurantSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.CustomerRegistration, "CustomerId", "CustomerId", feedBack.CustomerId);
             return View(feedBack);
         }
 
@@ -130,8 +124,7 @@ namespace SmartFoodRestaurantSystem.Controllers
             }
 
             var feedBack = await _context.FeedBack
-                .Include(f => f.Customer)
-                .FirstOrDefaultAsync(m => m.FeedBackId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (feedBack == null)
             {
                 return NotFound();
@@ -143,7 +136,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         // POST: FeedBacks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             var feedBack = await _context.FeedBack.FindAsync(id);
             _context.FeedBack.Remove(feedBack);
@@ -151,9 +144,9 @@ namespace SmartFoodRestaurantSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FeedBackExists(int id)
+        private bool FeedBackExists(int? id)
         {
-            return _context.FeedBack.Any(e => e.FeedBackId == id);
+            return _context.FeedBack.Any(e => e.Id == id);
         }
     }
 }

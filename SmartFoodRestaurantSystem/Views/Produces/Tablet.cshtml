@@ -1,0 +1,264 @@
+﻿@model IEnumerable<SmartFoodRestaurantSystem.Models.Produce>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@{
+    var photoPath = "";
+}
+<style>
+
+    #items > li {
+        list-style: circle;
+    }
+
+    a {
+        color: #1cc88a;
+    }
+
+    .card {
+        border: 1px solid #1cc88a;
+    }
+
+    p {
+        font-size: 12px;
+    }
+</style>
+
+
+<div class="col-md-8">
+    <form class="navbar-search" action="/Produces/Tablet">
+
+        <div class="input-group">
+            <input type="text" class="form-control search-field" name="f" placeholder="Please Search Food" />
+            <div class="input-group-btn">
+                <button type="submit" style="border-radius: 0px;" class="btn btn-success">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="row" style="margin-top: 10px">
+    <div class="col-md-2">
+
+        <ul id="items">
+            <li>All</li>
+            <li>Pizza</li>
+            <li>Tandoori</li>
+            <li>Indian</li>
+            <li>Fast Food</li>
+            <li>Chinese Mians</li>
+            <li>Chicken Cury</li>
+            <li>Beef Fry</li>
+            <li>Hot Dog</li>
+            <li>Shawarma</li>
+            <li>Pasta</li>
+            <li>Biryani</li>
+            <li>Chinese Mians</li>
+            <li>Chicken Cury</li>
+            <li>Beef Fry</li>
+            <li>Hot Dog</li>
+            <li>Shawarma</li>
+            <li>Pasta</li>
+            <li>Biryani</li>
+        </ul>
+
+
+    </div>
+
+
+    <div class="col-md-5">
+
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#home">New Order</a>
+            </li>
+            @if (Context.Session.GetString("Role") == "Admin")
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Orders" asp-action="GoingOrder">On Going Order</a>
+                </li>
+            }
+        </ul>
+
+
+
+        <div class="card-deck" id="Card" style=" overflow:auto; max-height:400px; max-width:600px; padding-left:16px">
+            @foreach (var item in Model)
+            {
+                photoPath = "~/images/" + item.PhotoUrl;
+                <div class="row">
+                    <div class="card m-3 parent_div" style="width: 90px">
+                        <div class="card-header">
+                            <p class="card-title" id="name">@item.Name</p>
+                        </div>
+                        <div class="check">
+
+                            <a class="press" style="cursor: pointer">
+                                <img class="card-img" src="@photoPath" asp-append-version="true" />
+                            </a>
+                        </div>
+                        <div class="card-footer">
+
+                            <h6 id="price">@item.PriceFull</h6>
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+
+
+
+    <div class="col-md-5">
+
+        <div class="table-responsive">
+            <table id="tblSkills" class="table table-bordered" width="100%" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>SubTotal</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <input type="submit" value="Place Order" id="placeorder" class="btn btn-success" />
+
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        var Price = 0;
+        var itemSubtotal = 0;
+        $(document).ready(function () {
+            $(".press").one("click",function () {
+                var closestDiv = $(this).closest(".parent_div");
+                var itemName = closestDiv.find("#name").text();
+                var itemPrice = closestDiv.find("#price").text();
+                var itemQuantity = 1;
+                itemSubtotal = itemQuantity * itemPrice;
+                var tbody = $("#tblSkills > TBODY")[0];
+                var row = tbody.insertRow(-1);
+
+                var cell = $(row.insertCell(-1));
+                cell.html(itemName);
+
+                cell = $(row.insertCell(-1));
+                cell.html(itemQuantity);
+
+                cell = $(row.insertCell(-1));
+                cell.html(itemPrice);
+
+                cell = $(row.insertCell(-1));
+                cell.html(itemSubtotal);
+
+                cell = $(row.insertCell(-1));
+                 var btnIncrementCounter = $("<input/>");
+                btnIncrementCounter.attr("type", "button");
+                btnIncrementCounter.attr("onclick", "countIncrement(this);");
+                btnIncrementCounter.attr("class", "btn btn-success btn-sm ");
+                btnIncrementCounter.val("+");
+                cell.append(btnIncrementCounter);
+
+
+                cell = $(row.insertCell(-1));
+                var btnDecrementCounter = $("<input/>");
+                btnDecrementCounter.attr("type", "button");
+                btnDecrementCounter.attr('onclick', 'countDecrement(this);');
+                btnDecrementCounter.attr("class", "btn btn-info btn-sm")
+                btnDecrementCounter.val("-");
+                cell.append(btnDecrementCounter);
+
+                cell = $(row.insertCell(-1));
+                var btnRemove = $("<input/>");
+                btnRemove.attr("type", "button");
+                btnRemove.attr("onclick", "Remove(this);")
+                btnRemove.attr("class", "btn btn-danger btn-sm")
+                btnRemove.val("x");
+                cell.append(btnRemove);
+
+            });
+        });
+          function countIncrement(button) {
+                var row = $(button).closest("TR");
+                var oldvalue = $("TD", row).eq(1).html();
+                 var itemPrice = $("TD", row).eq(2).html();
+                 if (oldvalue >= 1) {
+                     itemQuantity = parseInt(oldvalue) + 1;
+                     itemSubtotal = itemQuantity * itemPrice;
+                     $("TD", row).eq(1).html(itemQuantity);
+                     $("TD", row).eq(3).html(itemSubtotal);
+                 }
+              };
+
+            function countDecrement(button) {
+                var row = $(button).closest("TR");
+                var oldvalue = $("TD", row).eq(1).html();
+                var itemPrice = $("TD", row).eq(2).html();
+                if (oldvalue > 1) {
+                    itemQuantity = parseInt(oldvalue) - 1;
+                    itemSubtotal = parseInt(itemQuantity * itemPrice);
+                    $("TD", row).eq(1).html(itemQuantity);
+                    $("TD", row).eq(3).html(itemSubtotal);
+                }
+            };
+
+            function Remove(button) {
+                //Determine the reference of the Row using the Button.
+                var row = $(button).closest("TR");
+                var name = $("TD", row).eq(0).html();
+                if (confirm("Do you want to delete:" + name)) {
+                    //Get the reference of the Table.
+                    var table = $("#tblSkills")[0];
+
+                    //Delete the Table row using it's Index.
+                    table.deleteRow(row[0].rowIndex);
+                }
+            };
+        $("#placeorder").click(function () {
+            //Loop throughthe Table rows and build a JSON array.
+            var skills = new Array();
+            $("#tblSkills TBODY TR").each(function () {
+                var row = $(this);
+                var OrderDetail = {};
+                OrderDetail.Name = row.find("TD").eq(0).html();
+                OrderDetail.Quantity = row.find("TD").eq(1).html();
+                OrderDetail.Price = row.find("TD").eq(2).html();
+                OrderDetail.SubTotal = row.find("TD").eq(3).html();
+                OrderDetail.OrderId = @Context.Session.GetString("id");
+                itemSubtotal = parseInt(row.find("TD").eq(3).html());
+                skills.push(OrderDetail);
+                Price = parseInt(Price + itemSubtotal);
+
+            });
+
+
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: "/OrderDetails/CreateOrder",
+                data: {
+                    orderDetails: skills,
+                    OrderPrice: Price
+                },
+                success: function (r) {
+                    alert(r + " record(s) inserted.");
+                    location.reload();
+                }
+            });
+       });
+
+    </script>
+}
+
+
+
+

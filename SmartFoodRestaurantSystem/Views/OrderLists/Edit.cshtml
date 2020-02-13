@@ -1,0 +1,69 @@
+﻿@model SmartFoodRestaurantSystem.Models.OrderList
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>OrderList</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="TableNumber" class="control-label"></label>
+                <input asp-for="TableNumber" class="form-control" />
+                <span asp-validation-for="TableNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalAmount" class="control-label"></label>
+                <input asp-for="TotalAmount" class="form-control" id="a" />
+                <span asp-validation-for="TotalAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderID" class="control-label"></label>
+                <input asp-for="OrderID" class="form-control" />
+                <span asp-validation-for="OrderID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Discount" class="control-label"></label>
+                <input asp-for="Discount" class="form-control" id="d" />
+                <span asp-validation-for="Discount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceCharges" class="control-label"></label>
+                <input asp-for="ServiceCharges" class="form-control" id="b" onkeyup="add()" />
+                <span asp-validation-for="ServiceCharges" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GrandTotal" class="control-label"></label>
+                <input asp-for="GrandTotal" class="form-control" id="c" onkeyup="add()" />
+                <span asp-validation-for="GrandTotal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+     function add() {
+         var x = parseInt(document.getElementById("a").value);
+         var y = parseInt(document.getElementById("b").value);
+         var z = parseInt(document.getElementById("d").value);
+         document.getElementById("c").value = x + y -z;
+     }
+    </script>
+}
+

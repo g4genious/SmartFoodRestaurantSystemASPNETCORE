@@ -1,0 +1,68 @@
+﻿@model IEnumerable<SmartFoodRestaurantSystem.Models.Order>
+
+@{
+    ViewData["Title"] = "Dinning Tables";
+}
+
+<style>
+    .card {
+    
+        width: 80px;
+        border: 2px solid #1cc88a;
+    }
+
+    img {
+        width: 75px;
+        height: 75px;
+    }
+
+    .card-deck {
+        margin-left: 30%;
+    }
+
+    h2 {
+        color: #1cc88a;
+    }
+
+    a {
+        color: #1cc88a
+    }
+
+        a:hover {
+            color: red;
+            text-decoration: none;
+        }
+
+    .card-header {
+        height: 30px;
+    }
+   
+</style>
+
+<h1 class="h3 ml-3 mb-0 text-gray-800">Select Table</h1>
+<div class="col-md-10">
+    <div class="card-deck">
+        @for (int i = 1; i <= 27; i++)
+
+        {
+            <div class="row justify-content-md-center" style="padding: 3px">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="m-0 font-weight-bold text-primary" id="name"><a asp-route-id="@i" asp-action="DinningTablesPost" asp-controller="Orders">G @i</a></h6>
+                    </div>
+
+
+                    <div class="check">
+                        <img src="~/images/dinner.png" />
+
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+</div>
+
+
+

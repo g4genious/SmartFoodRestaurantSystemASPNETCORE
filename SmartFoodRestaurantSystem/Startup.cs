@@ -31,7 +31,7 @@ namespace SmartFoodRestaurantSystem
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDbContext<SmartFoodResturantContext>(options =>
+            services.AddDbContext<SmartResturantContext>(options =>
                options.UseSqlServer(
                    Configuration.GetConnectionString("Connection")));
 
@@ -39,6 +39,8 @@ namespace SmartFoodRestaurantSystem
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSession();
+            services.AddDistributedMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,7 +61,7 @@ namespace SmartFoodRestaurantSystem
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseSession();
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -67,7 +69,7 @@ namespace SmartFoodRestaurantSystem
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Users}/{action=Login}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

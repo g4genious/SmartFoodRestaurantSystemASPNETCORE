@@ -11,9 +11,9 @@ namespace SmartFoodRestaurantSystem.Controllers
 {
     public class StocksController : Controller
     {
-        private readonly SmartFoodResturantContext _context;
+        private readonly SmartResturantContext _context;
 
-        public StocksController(SmartFoodResturantContext context)
+        public StocksController(SmartResturantContext context)
         {
             _context = context;
         }
@@ -21,8 +21,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         // GET: Stocks
         public async Task<IActionResult> Index()
         {
-            var smartFoodResturantContext = _context.Stock.Include(s => s.Admin).Include(s => s.Product).Include(s => s.Supplier);
-            return View(await smartFoodResturantContext.ToListAsync());
+            return View(await _context.Stock.ToListAsync());
         }
 
         // GET: Stocks/Details/5
@@ -34,10 +33,7 @@ namespace SmartFoodRestaurantSystem.Controllers
             }
 
             var stock = await _context.Stock
-                .Include(s => s.Admin)
-                .Include(s => s.Product)
-                .Include(s => s.Supplier)
-                .FirstOrDefaultAsync(m => m.StockId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (stock == null)
             {
                 return NotFound();
@@ -49,9 +45,6 @@ namespace SmartFoodRestaurantSystem.Controllers
         // GET: Stocks/Create
         public IActionResult Create()
         {
-            ViewData["AdminId"] = new SelectList(_context.Admin, "AdminId", "AdminId");
-            ViewData["ProductId"] = new SelectList(_context.Product, "ProductId", "ProductId");
-            ViewData["SupplierId"] = new SelectList(_context.SupplierRegistration, "SupplierId", "SupplierId");
             return View();
         }
 
@@ -60,7 +53,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StockId,SupplierId,ProductId,AdminId,StockAddedBy,StockAddedDate,StockModifiedDate,StockModifiedBy,UnitPrice,TotalAmount,ProductType,CurrentStock")] Stock stock)
+        public async Task<IActionResult> Create([Bind("Id,UnitPrice,ProductId,SupplierId,CategoryId,AddedBy,Date,Quantity,ExpiryDate")] Stock stock)
         {
             if (ModelState.IsValid)
             {
@@ -68,9 +61,6 @@ namespace SmartFoodRestaurantSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AdminId"] = new SelectList(_context.Admin, "AdminId", "AdminId", stock.AdminId);
-            ViewData["ProductId"] = new SelectList(_context.Product, "ProductId", "ProductId", stock.ProductId);
-            ViewData["SupplierId"] = new SelectList(_context.SupplierRegistration, "SupplierId", "SupplierId", stock.SupplierId);
             return View(stock);
         }
 
@@ -87,9 +77,6 @@ namespace SmartFoodRestaurantSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["AdminId"] = new SelectList(_context.Admin, "AdminId", "AdminId", stock.AdminId);
-            ViewData["ProductId"] = new SelectList(_context.Product, "ProductId", "ProductId", stock.ProductId);
-            ViewData["SupplierId"] = new SelectList(_context.SupplierRegistration, "SupplierId", "SupplierId", stock.SupplierId);
             return View(stock);
         }
 
@@ -98,9 +85,9 @@ namespace SmartFoodRestaurantSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StockId,SupplierId,ProductId,AdminId,StockAddedBy,StockAddedDate,StockModifiedDate,StockModifiedBy,UnitPrice,TotalAmount,ProductType,CurrentStock")] Stock stock)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UnitPrice,ProductId,SupplierId,CategoryId,AddedBy,Date,Quantity,ExpiryDate")] Stock stock)
         {
-            if (id != stock.StockId)
+            if (id != stock.Id)
             {
                 return NotFound();
             }
@@ -114,7 +101,7 @@ namespace SmartFoodRestaurantSystem.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StockExists(stock.StockId))
+                    if (!StockExists(stock.Id))
                     {
                         return NotFound();
                     }
@@ -125,9 +112,6 @@ namespace SmartFoodRestaurantSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AdminId"] = new SelectList(_context.Admin, "AdminId", "AdminId", stock.AdminId);
-            ViewData["ProductId"] = new SelectList(_context.Product, "ProductId", "ProductId", stock.ProductId);
-            ViewData["SupplierId"] = new SelectList(_context.SupplierRegistration, "SupplierId", "SupplierId", stock.SupplierId);
             return View(stock);
         }
 
@@ -140,10 +124,7 @@ namespace SmartFoodRestaurantSystem.Controllers
             }
 
             var stock = await _context.Stock
-                .Include(s => s.Admin)
-                .Include(s => s.Product)
-                .Include(s => s.Supplier)
-                .FirstOrDefaultAsync(m => m.StockId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (stock == null)
             {
                 return NotFound();
@@ -165,7 +146,7 @@ namespace SmartFoodRestaurantSystem.Controllers
 
         private bool StockExists(int id)
         {
-            return _context.Stock.Any(e => e.StockId == id);
+            return _context.Stock.Any(e => e.Id == id);
         }
     }
 }

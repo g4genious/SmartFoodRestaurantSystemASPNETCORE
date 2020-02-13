@@ -3,44 +3,46 @@
 @{
     ViewData["Title"] = "Create";
 }
+<style>
+    form {
+        margin-left: 50%;
+    }
+</style>
 
-<h1>Create</h1>
-
-<h4>FeedBack</h4>
+<h4 class="h3 ml-3 mb-0 text-gray-800">FeedBack</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-7">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="FeedBackDescription" class="control-label"></label>
-                <input asp-for="FeedBackDescription" class="form-control" />
-                <span asp-validation-for="FeedBackDescription" class="text-danger"></span>
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FeedBackEnvironment" class="control-label"></label>
-                <input asp-for="FeedBackEnvironment" class="form-control" />
-                <span asp-validation-for="FeedBackEnvironment" class="text-danger"></span>
+                <label asp-for="Environment" class="control-label"></label>
+                <input asp-for="Environment" class="form-control" />
+                <span asp-validation-for="Environment" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FeedBackStaffBehaviour" class="control-label"></label>
-                <input asp-for="FeedBackStaffBehaviour" class="form-control" />
-                <span asp-validation-for="FeedBackStaffBehaviour" class="text-danger"></span>
+                <label asp-for="Staff" class="control-label"></label>
+                <input asp-for="Staff" class="form-control" />
+                <span asp-validation-for="Staff" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
-                <select asp-for="CustomerId" class ="form-control" asp-items="ViewBag.CustomerId"></select>
+                <label asp-for="Food" class="control-label"></label>
+                <input asp-for="Food" class="form-control" />
+                <span asp-validation-for="Food" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

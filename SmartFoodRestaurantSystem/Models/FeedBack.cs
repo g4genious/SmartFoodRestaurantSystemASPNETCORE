@@ -5,12 +5,10 @@ namespace SmartFoodRestaurantSystem.Models
 {
     public partial class FeedBack
     {
-        public int FeedBackId { get; set; }
-        public string FeedBackDescription { get; set; }
-        public string FeedBackEnvironment { get; set; }
-        public string FeedBackStaffBehaviour { get; set; }
-        public int? CustomerId { get; set; }
-
-        public virtual CustomerRegistration Customer { get; set; }
+        public int? Id { get; set; }
+        public string Description { get; set; }
+        public string Environment { get; set; }
+        public string Staff { get; set; }
+        public string Food { get; set; }
     }
 }

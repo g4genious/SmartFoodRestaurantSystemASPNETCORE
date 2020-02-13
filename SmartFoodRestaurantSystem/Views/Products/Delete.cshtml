@@ -11,70 +11,40 @@
     <h4>Product</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductName)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductName)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductQuantity)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Unit)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductQuantity)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Unit)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductPrice)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Date)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductPrice)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Date)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductReceivedDate)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SupplierId)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductReceivedDate)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SupplierId)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductReceivedBy)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductReceivedBy)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Category.Id)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductReturnDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductReturnDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductReturnBy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductReturnBy)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductUpdatedDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductUpdatedDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductUpdatedBy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductUpdatedBy)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Supplier)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Supplier.SupplierId)
-        </dd class>
     </dl>
-    
+
     <form asp-action="Delete">
-        <input type="hidden" asp-for="ProductId" />
+        <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<SmartFoodRestaurantSystem.Models.OrderListViewDB>
+
+@{
+    ViewData["Title"] = "Receipt";
+}
+<div id="print">
+    <h1>Receipt</h1>
+    <div> Date:@DateTime.Now</div>
+    <table class="table col-md-4 table-bordered mt-4">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.itemName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SubTotal)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.itemName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SubTotal)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <table class="table-bordered">
+        <tbody>
+            @foreach (var t in ViewBag.Totals)
+            {
+
+                <tr>
+                    <td><h6>Total Amount:@t.TotalAmount</h6></td>
+                </tr>
+                <tr>
+                    <td><h6>Service Charges:@t.ServiceCharges</h6></td>
+                </tr>
+                <tr>
+                    <td><h6>Discount:@t.Discount</h6></td>
+                </tr>
+                <tr><td><h6>GrandTotal:@t.GrandTotal</h6></td></tr>
+
+            }
+        </tbody>
+    </table>
+</div>
+<input type='button' id='btn' value='Print' onclick='printDiv();'>
+
+@section Scripts{
+    <script>
+        function printDiv() {
+
+            var divToPrint = document.getElementById('print');
+
+            var newWin = window.open('', 'Print-Window');
+
+            newWin.document.open();
+
+            newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
+
+            newWin.document.close();
+
+            setTimeout(function () { newWin.close(); }, 10);
+
+        }
+
+    </script>
+}

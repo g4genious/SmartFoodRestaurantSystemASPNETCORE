@@ -21,7 +21,9 @@ namespace SmartFoodRestaurantSystem.Controllers
         // GET: Stocks
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Stock.ToListAsync());
+            var smartResturantContext = _context.Stock.Include(p => p.Product)
+                .Include(p => p.Supplier).Include(p => p.Category);
+            return View(await smartResturantContext.ToListAsync());
         }
 
         // GET: Stocks/Details/5
@@ -31,8 +33,8 @@ namespace SmartFoodRestaurantSystem.Controllers
             {
                 return NotFound();
             }
-
-            var stock = await _context.Stock
+            var stock = await _context.Stock.Include(p => p.Product)
+                .Include(p => p.Supplier).Include(p => p.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (stock == null)
             {
@@ -45,6 +47,9 @@ namespace SmartFoodRestaurantSystem.Controllers
         // GET: Stocks/Create
         public IActionResult Create()
         {
+            ViewData["ProductName"] = new SelectList(_context.Product, "Id", "Name");
+            ViewData["SupplierName"] = new SelectList(_context.Supplier, "Id", "Name");
+            ViewData["CategoryName"] = new SelectList(_context.Category, "Id", "Name");
             return View();
         }
 
@@ -61,6 +66,9 @@ namespace SmartFoodRestaurantSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProductName"] = new SelectList(_context.Stock, "Id", "Id", stock.ProductId);
+            ViewData["SupplierName"] = new SelectList(_context.Supplier, "Id", "Id", stock.SupplierId);
+            ViewData["CategoryName"] = new SelectList(_context.Category, "Id", "Id", stock.CategoryId);
             return View(stock);
         }
 
@@ -77,6 +85,9 @@ namespace SmartFoodRestaurantSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["ProductName"] = new SelectList(_context.Stock, "Id", "Id", stock.ProductId);
+            ViewData["SupplierName"] = new SelectList(_context.Supplier, "Id", "Id", stock.SupplierId);
+            ViewData["CategoryName"] = new SelectList(_context.Category, "Id", "Id", stock.CategoryId);
             return View(stock);
         }
 
@@ -112,6 +123,9 @@ namespace SmartFoodRestaurantSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProductName"] = new SelectList(_context.Stock, "Id", "Id", stock.ProductId);
+            ViewData["SupplierName"] = new SelectList(_context.Supplier, "Id", "Id", stock.SupplierId);
+            ViewData["CategoryName"] = new SelectList(_context.Category, "Id", "Id", stock.CategoryId);
             return View(stock);
         }
 
@@ -123,7 +137,8 @@ namespace SmartFoodRestaurantSystem.Controllers
                 return NotFound();
             }
 
-            var stock = await _context.Stock
+            var stock = await _context.Stock.Include(p => p.Product)
+                .Include(p => p.Supplier).Include(p => p.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (stock == null)
             {

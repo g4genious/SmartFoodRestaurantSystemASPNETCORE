@@ -41,25 +41,25 @@
     <div class="col-md-2">
 
         <ul id="items">
-            <li>All</li>
-            <li>Pizza</li>
-            <li>Tandoori</li>
-            <li>Indian</li>
-            <li>Fast Food</li>
-            <li>Chinese Mians</li>
-            <li>Chicken Cury</li>
-            <li>Beef Fry</li>
-            <li>Hot Dog</li>
-            <li>Shawarma</li>
-            <li>Pasta</li>
-            <li>Biryani</li>
-            <li>Chinese Mians</li>
-            <li>Chicken Cury</li>
-            <li>Beef Fry</li>
-            <li>Hot Dog</li>
-            <li>Shawarma</li>
-            <li>Pasta</li>
-            <li>Biryani</li>
+            <li class="sidebar_values"><a  href="#" onclick="getsidebar(this)">All</a></li>
+            <li><a href="#" class="sidebar_values" onclick="getsidebar(this)">Pizza</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Tandoori</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Indian</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Fast Food</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Chinese Mians</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Chicken Cury</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Beef Fry</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Hot Dog</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Shawarma</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Pasta</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Biryani</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Chinese Mians</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Chicken Cury</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Beef Fry</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Hot Dog</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Shawarma</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Pasta</a></li>
+            <li><a href="#" onclick="getsidebar(this)">Biryani</a></li>
         </ul>
 
 
@@ -129,17 +129,60 @@
             </table>
 
             <input type="submit" value="Place Order" id="placeorder" class="btn btn-success" />
-
+           
+            <a asp-action="CancelOrder" id="cancelOrder" asp-controller="Produces" asp-route-id="@Context.Session.GetString("id")">CancelOrder</a>
 
         </div>
     </div>
 </div>
 @section Scripts{
     <script>
+
+            $('#cancelOrder').fadeOut(10000);
+           
+        
+        var sidebar_value;
+        function getsidebar(value) {
+            sidebar_value = value.text;
+             $.ajax({
+                type: "POST",
+                url: "/Produces/sidebar",
+                data: {
+                    value: sidebar_value
+                },
+                success: function (data) {
+                    var html1 = '';
+                    $.each(data, function (id,index) {
+                        html1 += '<div class="row">' +
+                            '               <div class="card m-3 parent_div" style="width: 90px">' +
+                            '                        <div class="card-header">' +
+                            '                            <p class="card-title" id="name">' + index.name + '</p>' +
+                            '                        </div>' +
+                            '                        <div class="check">' +
+                            '' +
+                            '                            <a class="press" style="cursor: pointer">' +
+                            '                                <img class="card-img" src="/images/' + index.photoUrl + '"/>' +
+                            '                            </a>' +
+                            '                        </div>' +
+                            '                        <div class="card-footer">' +
+                            '' +
+                            '                            <h6 id="price">' + index.priceFull + '</h6>' +
+                            '                        </div>' +
+                            '' +
+                            '                    </div>' +
+
+                            '                </div>';
+                    });
+                    $(".card-deck").html("");
+                    $(".card-deck").html(html1);
+                }
+            });
+        }
+
         var Price = 0;
         var itemSubtotal = 0;
         $(document).ready(function () {
-            $(".press").one("click",function () {
+            $(document).on("click", ".press", function () {
                 var closestDiv = $(this).closest(".parent_div");
                 var itemName = closestDiv.find("#name").text();
                 var itemPrice = closestDiv.find("#price").text();
@@ -222,7 +265,7 @@
                     //Delete the Table row using it's Index.
                     table.deleteRow(row[0].rowIndex);
                 }
-            };
+        };
         $("#placeorder").click(function () {
             //Loop throughthe Table rows and build a JSON array.
             var skills = new Array();
@@ -239,15 +282,14 @@
                 Price = parseInt(Price + itemSubtotal);
 
             });
-
-
             //Send the JSON array to Controller using AJAX.
             $.ajax({
                 type: "POST",
                 url: "/OrderDetails/CreateOrder",
                 data: {
                     orderDetails: skills,
-                    OrderPrice: Price
+                    OrderPrice: Price,
+                    kitchenDetails: skills,
                 },
                 success: function (r) {
                     alert(r + " record(s) inserted.");

@@ -18,6 +18,7 @@ namespace SmartFoodRestaurantSystem.Models
         public string Quantity { get; set; }
         public string Price { get; set; }
         public string SubTotal { get; set; }
+        public int? TableNumber { get; set; }
 
 
     }

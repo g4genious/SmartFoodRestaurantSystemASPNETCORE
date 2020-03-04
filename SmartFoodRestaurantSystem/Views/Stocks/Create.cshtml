@@ -19,17 +19,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="ProductId" class="control-label"></label>
-                <input asp-for="ProductId" class="form-control" />
+                <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductName"></select>
                 <span asp-validation-for="ProductId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="SupplierId" class="control-label"></label>
-                <input asp-for="SupplierId" class="form-control" />
+                <select asp-for="SupplierId" class="form-control" asp-items="ViewBag.SupplierName"></select>
                 <span asp-validation-for="SupplierId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
-                <input asp-for="CategoryId" class="form-control" />
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryName"></select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">

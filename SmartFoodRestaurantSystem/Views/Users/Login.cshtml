@@ -32,29 +32,25 @@
                                     </div>
                                     <form class="user" asp-action="Login">
                                         <div class="form-group">
-                                            <label  class="control-label">Username</label>
+                                            <label class="control-label">Username</label>
                                             <input asp-for="Name" style="border-radius: 0" class="form-control " id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Username..." tabindex="1" autofocus>
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="Password" class="control-label"></label>
                                             <input asp-for="Password" style="border-radius: 0" type="password" class="form-control " id="exampleInputPassword" placeholder="Password" tabindex="2">
                                         </div>
-                                        <div class="form-group">
+                                        @*<div class="form-group">
                                             <label asp-for="Role" class="control-label"></label>
                                             <select class="form-control" style="border-radius: 0" asp-for="Role">
-                                                <option  value="Admin">Admin</option>
-                                                <option  value="Tablet">Tablet</option>
-                                                <option  value="Kitchen">Kitchen</option>
+                                                <option value="Admin">Admin</option>
+                                                <option value="Tablet">Tablet</option>
+                                                <option value="Kitchen">Kitchen</option>
                                             </select>
                                             <span asp-validation-for="Role" class="text-danger"></span>
-                                        </div>
-                                      
-
+                                        </div>*@
                                         <div class="form-group">
                                             <input type="submit" value="Login" class="btn btn-success btn-user btn-block" />
                                         </div>
-
-
                                     </form>
                                     <hr>
                                 </div>
@@ -69,7 +65,7 @@
 
     </div>
 
-   
+
 
 </body>
 
@@ -77,8 +73,8 @@
 
 
 
-          
-        
+
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

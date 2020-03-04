@@ -18,28 +18,25 @@ namespace SmartFoodRestaurantSystem.Controllers
         {
             _context = context;
         }
-
+        // Display Selection OF Dinning Table View
         [HttpGet]
         public IActionResult DinningTables()
         {
             return View();
         }
-        // GET: GoingOrders
+        // GET: Show GoingOrders
         public async Task<IActionResult> GoingOrder()
         {
             return View(await _context.Order.ToListAsync());
         }
 
-
-
-
-
+        //Store and Select Dinning Table Number
         public IActionResult DinningTablesPost(int id)
         {
             HttpContext.Session.SetInt32("TableNumber", id);
             return RedirectToAction("Create", "Customers");
         }
-
+        //Show Order Details
         public IActionResult Show(int id)
         {
             IList<OrderDetailViewDB> Details = (from d in _context.OrderDetail
@@ -55,9 +52,13 @@ namespace SmartFoodRestaurantSystem.Controllers
 
             return View(Details);
         }
+        //Show List of Cancel Orders
+        public IActionResult CancelOrderList()
+        {
+            return View(_context.Order.Where(t => t.status == "Cancel").ToList());
+        }
 
-
-        // GET: Orders
+        // GET: Display Orders List
         public async Task<IActionResult> Index()
         {
             return View(await _context.Order.ToListAsync());
@@ -87,6 +88,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         {
             return View();
         }
+        //Store Order Related info in Database
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Order order)
@@ -96,6 +98,7 @@ namespace SmartFoodRestaurantSystem.Controllers
             {
                 order.TableNumber = HttpContext.Session.GetInt32("TableNumber");
                 order.Date = DateTime.Now;
+                order.status = "Pending";
                 _context.Add(order);
                 await _context.SaveChangesAsync();
                 HttpContext.Session.SetString("id", order.Id.ToString());
@@ -103,6 +106,7 @@ namespace SmartFoodRestaurantSystem.Controllers
             }
             return View(order);
         }
+
         // GET: Orders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

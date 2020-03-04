@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,13 +23,20 @@ namespace SmartFoodRestaurantSystem.Controllers
             _context = context;
             _hostingEnvironment = hostingEnvironment;
         }
+        //Cancel Order Action
+        public void CancelOrder(string id)
+        {
 
-       
+            var order_Find = _context.Order.Find(Int32.Parse(id));
+            order_Find.status = "Cancel";
+            _context.SaveChanges();
+        }
 
         // GET: Produces
         public async Task<IActionResult> Index()
-        {
-            return View(await _context.Produce.ToListAsync());
+        { 
+           
+                return View(await _context.Produce.ToListAsync());
            
         }
         public IActionResult Tablet(string f = "")
@@ -41,8 +49,23 @@ namespace SmartFoodRestaurantSystem.Controllers
             var searcheddata = _context.Produce.Where(abc => abc.Name.Contains(f) || abc.Description.Contains(f)).ToList();
 
             return View(searcheddata);
+
         }
-      
+  
+       
+        [HttpPost]
+        public IList<Produce> sidebar(string value)
+        {
+            if(value == "All")
+            {
+                return (_context.Produce.ToList());
+            }
+            var searcheddata = _context.Produce.Where(abc => abc.Category.Contains(value)).ToList();
+
+            return (searcheddata);
+        }
+
+
         // GET: Produces/Details/5
         public async Task<IActionResult> Details(int? id)
         {

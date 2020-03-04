@@ -88,25 +88,39 @@ namespace SmartFoodRestaurantSystem.Controllers
                                    });
                 ViewBag.Totals = TotalAmount;
 
+                var order = _context.Order
+                 .FirstOrDefault(m => m.Id == id);
+                order.status = "Completed";
+                _context.SaveChanges();
                 return View(Receipt);
             }
         }
 
 
+
+
         // GET: OrderLists/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Payment(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var orderList = await _context.OrderList.FindAsync(id);
-            if (orderList == null)
-            {
-                return NotFound();
-            }
-            return View(orderList);
+            OrderListViewDB Payment = (from c in _context.OrderList
+                                       where id.ToString() == c.OrderID
+                                       select new OrderListViewDB
+                                       {
+                                           Id = c.Id,
+                                           TableNumber = c.TableNumber,
+                                           TotalAmount = c.TotalAmount,
+                                           OrderID = c.OrderID,
+                                           Date = c.Date,
+                                           Discount = c.Discount,
+                                           ServiceCharges = c.ServiceCharges,
+                                           GrandTotal = c.GrandTotal
+                                       }).FirstOrDefault();
+     
+            return View(Payment);
         }
 
         // POST: OrderLists/Edit/5
@@ -114,9 +128,9 @@ namespace SmartFoodRestaurantSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerName,TableNumber,Date,TotalAmount,OrderID,Discount,ServiceCharges,GrandTotal")] OrderList orderList)
+        public async Task<IActionResult> Edit(int id, OrderList payment)
         {
-            if (id != orderList.Id)
+            if (id != payment.Id)
             {
                 return NotFound();
             }
@@ -125,12 +139,21 @@ namespace SmartFoodRestaurantSystem.Controllers
             {
                 try
                 {
-                    _context.Update(orderList);
+                    
+                    OrderList P = (from c in _context.OrderList
+                                               where id.ToString() == c.OrderID
+                                               select new OrderList
+                                               {
+                                                   Id = c.Id
+                                               }).FirstOrDefault();
+                    payment.Id = P.Id;
+
+                    _context.Update(payment);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException ex)
                 {
-                    if (!OrderListExists(orderList.Id))
+                    if (!OrderListExists(payment.OrderID))
                     {
                         return NotFound();
                     }
@@ -139,9 +162,9 @@ namespace SmartFoodRestaurantSystem.Controllers
                         throw;
                     }
                 }
-           
+
             }
-            return View(orderList);
+            return View();
         }
 
         // GET: OrderLists/Delete/5
@@ -173,9 +196,10 @@ namespace SmartFoodRestaurantSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OrderListExists(int id)
+        private bool OrderListExists(string id)
         {
-            return _context.OrderList.Any(e => e.Id == id);
+            var x = id;
+            return _context.OrderList.Any(e => e.OrderID == id);
         }
     }
 }

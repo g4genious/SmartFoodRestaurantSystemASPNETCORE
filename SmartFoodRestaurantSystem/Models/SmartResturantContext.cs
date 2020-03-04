@@ -74,7 +74,7 @@ namespace SmartFoodRestaurantSystem.Models
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.Description).HasMaxLength(500);
+                entity.Property(e => e.Service).HasMaxLength(500);
 
                 entity.Property(e => e.Environment).HasMaxLength(50);
 
@@ -104,6 +104,7 @@ namespace SmartFoodRestaurantSystem.Models
                 entity.Property(e => e.Name).HasColumnName("Name");
                 entity.Property(e => e.TableNumber).HasColumnName("TableNumber");
                 entity.Property(e => e.Date).HasColumnType("datetime");
+                entity.Property(e => e.status).HasColumnType("status");
             });
 
             modelBuilder.Entity<OrderDetail>(entity =>
@@ -113,8 +114,7 @@ namespace SmartFoodRestaurantSystem.Models
                 entity.Property(e => e.Price).HasColumnName("Price");
                 entity.Property(e => e.Quantity).HasColumnName("Quantity");
                 entity.Property(e => e.SubTotal).HasColumnName("SubTotal");
-                entity.Property(e => e.OrderId).HasColumnName("OrderId");
-
+                entity.Property(e => e.OrderId).HasColumnName("OrderId");   
             });
 
             modelBuilder.Entity<OrderList>(entity =>
@@ -150,6 +150,8 @@ namespace SmartFoodRestaurantSystem.Models
 
                 entity.Property(e => e.PriceHalf).HasColumnName("Price_Half");
 
+                entity.Property(e => e.Category).HasColumnName("Category");
+
                 entity.Property(e => e.Status).HasMaxLength(50);
 
                 entity.Property(e => e.UpdatedBy)
@@ -179,6 +181,10 @@ namespace SmartFoodRestaurantSystem.Models
                     .WithMany(p => p.Product)
                     .HasForeignKey(d => d.CategoryId)
                     .HasConstraintName("FK_Product_Category");
+                entity.HasOne(d => d.Supplier)
+                  .WithMany(p => p.Product)
+                  .HasForeignKey(d => d.SupplierId)
+                  .HasConstraintName("FK_Product_Supplier");
             });
 
             modelBuilder.Entity<Staff>(entity =>
@@ -221,6 +227,21 @@ namespace SmartFoodRestaurantSystem.Models
                 entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
                 entity.Property(e => e.SupplierId).HasColumnName("SupplierID");
+             
+                entity.HasOne(d => d.Product)
+                  .WithMany(p => p.Stock)
+                  .HasForeignKey(d => d.ProductId)
+                  .HasConstraintName("FK_Product_Stock");
+                
+                entity.HasOne(d => d.Supplier)
+                 .WithMany(p => p.Stock)
+                 .HasForeignKey(d => d.SupplierId)
+                 .HasConstraintName("FK_Supplier_Stock");
+                
+                entity.HasOne(d => d.Category)
+                 .WithMany(p => p.Stock)
+                 .HasForeignKey(d => d.CategoryId)
+                 .HasConstraintName("FK_Category_Stock");
             });
 
             modelBuilder.Entity<Supplier>(entity =>

@@ -53,7 +53,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description,Environment,Staff,Food")] FeedBack feedBack)
+        public async Task<IActionResult> Create(FeedBack feedBack)
         {
             if (ModelState.IsValid)
             {

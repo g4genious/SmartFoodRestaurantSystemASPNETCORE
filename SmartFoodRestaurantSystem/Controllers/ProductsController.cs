@@ -17,11 +17,12 @@ namespace SmartFoodRestaurantSystem.Controllers
         {
             _context = context;
         }
-
+       
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var smartResturantContext = _context.Product.Include(p => p.Category);
+            var smartResturantContext = _context.Product.Include(p => p.Category).Include(p => p.Supplier);
+
             return View(await smartResturantContext.ToListAsync());
         }
 
@@ -34,7 +35,7 @@ namespace SmartFoodRestaurantSystem.Controllers
             }
 
             var product = await _context.Product
-                .Include(p => p.Category)
+                .Include(p => p.Category).Include(p=> p.Supplier)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
@@ -47,7 +48,8 @@ namespace SmartFoodRestaurantSystem.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id");
+            ViewData["CategoryName"] = new SelectList(_context.Category, "Id", "Name");
+            ViewData["SupplierName"] = new SelectList(_context.Supplier, "Id","Name");
             return View();
         }
 
@@ -65,6 +67,7 @@ namespace SmartFoodRestaurantSystem.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id", product.CategoryId);
+            ViewData["SupplierId"] = new SelectList(_context.Supplier, "Id", "Id", product.SupplierId);
             return View(product);
         }
 
@@ -82,6 +85,7 @@ namespace SmartFoodRestaurantSystem.Controllers
                 return NotFound();
             }
             ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id", product.CategoryId);
+            ViewData["SupplierId"] = new SelectList(_context.Supplier, "Id", "Id", product.SupplierId);
             return View(product);
         }
 
@@ -118,6 +122,7 @@ namespace SmartFoodRestaurantSystem.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id", product.CategoryId);
+            ViewData["SupplierId"] = new SelectList(_context.Supplier, "Id", "Id", product.SupplierId);
             return View(product);
         }
 
@@ -130,7 +135,7 @@ namespace SmartFoodRestaurantSystem.Controllers
             }
 
             var product = await _context.Product
-                .Include(p => p.Category)
+                .Include(p => p.Category).Include(p=> p.Supplier)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {

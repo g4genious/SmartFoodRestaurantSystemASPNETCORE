@@ -16,13 +16,13 @@
                 @Html.DisplayNameFor(model => model.UnitPrice)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductId)
+                @Html.DisplayNameFor(model => model.Product)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SupplierId)
+                @Html.DisplayNameFor(model => model.Supplier)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CategoryId)
+                @Html.DisplayNameFor(model => model.Category)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AddedBy)
@@ -47,13 +47,13 @@
                     @Html.DisplayFor(modelItem => item.UnitPrice)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ProductId)
+                    @Html.DisplayFor(modelItem => item.Product.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.SupplierId)
+                    @Html.DisplayFor(modelItem => item.Supplier.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CategoryId)
+                    @Html.DisplayFor(modelItem => item.Category.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AddedBy)

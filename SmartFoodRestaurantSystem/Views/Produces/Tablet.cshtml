@@ -1,228 +1,575 @@
 ﻿@model IEnumerable<SmartFoodRestaurantSystem.Models.Produce>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Tablet";
 }
 @{
+    int counter = 0;
     var photoPath = "";
 }
 <style>
+       
 
-    #items > li {
-        list-style: circle;
+        
+
+    .badge {
+        position: absolute;
+        top: 5px;
+        right: 0px;
+        border-radius: 0;
+        font-variant-caps: all-petite-caps;
+        padding: 5px 5px;
+        background-color: white;
+        color: #1cc88a;
+        font-size: 14px;
+        font-weight: bolder;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     }
 
-    a {
+    .bottom-right {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        position: absolute;
+        top: 62px;
+        color: black;
+        background-color: white;
+        padding: 1px 2px 1px 2px;
+        font-variant-caps: all-petite-caps;
+        color: #1cc88a;
+        font-weight:bold;
+    }
+
+    #cart::before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-top: 24px solid #1cc88a;
+        border-right: 24px solid transparent;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+
+
+
+    .parent_div {
+        width: 10rem;
+         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        border: 1px solid #1cc88a;
+        border-radius: 0;
+    }
+
+    .card:hover {
         color: #1cc88a;
     }
 
-    .card {
-        border: 1px solid #1cc88a;
+  
+
+ 
+
+        .card-title:hover {
+            color: #1cc88a;
+        }
+
+    #desc {
+        margin-top: 0;
+        padding: 1px 0px 0px 3px;
+        cursor: pointer;
+        font-variant-caps: all-petite-caps;
     }
 
-    p {
-        font-size: 12px;
+    hr {
+        margin: -6px 0px 0px 0px;
+        padding: 0;
     }
+
+    .card-img {
+        height: 90px;
+        border-radius: 0;
+    }
+
+    #font:hover {
+        text-decoration: none;
+        color: red;
+    }
+
+    #link:hover {
+        color: red;
+    }
+
+    #link {
+        background-color: #1cc88a;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+    }
+
+
+
+    .btn-sm {
+        font-weight: 900;
+        font-weight: bolder;
+        border-radius: 0;
+      
+    }
+
+
+
+    .side {
+        color: #ffffff;
+        background: -webkit-linear-gradient(left, #1cc88a, #decbfd);
+        background: -moz-linear-gradient(left, #1cc88a, #decbfd);
+        background: -o-linear-gradient(left, #1cc88a, #decbfd);
+        background: linear-gradient(left, #1cc88a, #decbfd);
+        background-size: 200%;
+        border-right: 2px inset #1cc88a;
+    }
+
+    .container-fluid {
+        margin: 0;
+        padding: 0;
+    }
+
+    #btn {
+        width: 112%;
+        border: 1px solid white;
+        background-color: #1cc88a;
+        padding: 2px 0px 2px 0px;
+    }
+
+    #btn1 {
+        width: 112%;
+        background-color: red;
+        border: 1px solid white;
+        font-family: 'Yu Gothic';
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        padding: 2px 0px 2px 0px;
+    }
+
+    #menu-h:hover {
+        color: #1cc88a;
+    }
+
+    #font {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+    }
+    .price-btn {
+        display: inline-block;
+        text-decoration: none;
+        font-weight: bold;
+        color: #FFF;
+        box-shadow: inset 0 0.6em 2em -0.3em rgba(0,0,0,0.15),inset 0 0 0em 0.05em rgba(255,255,255,0.12);
+        background-image: -webkit-linear-gradient(45deg, #1cc88a 0%, #1cc88a 100%);
+        background-image: linear-gradient(45deg, #1cc88a 0%, #1cc88a 100%);
+        transition: .10s;
+        font-size: 16px;
+        margin-left: 1px;
+   
+    }
+
+    .btn-sm:hover {
+        color: #FFF;
+    }
+
+    #item-body {
+  padding:0;
+        margin: 0;
+    }
+ 
 </style>
 
+<div class="container-fluid">
+    <!------Js Alert Code ------>
+    <div class="row">
 
-<div class="col-md-8">
-    <form class="navbar-search" action="/Produces/Tablet">
+        <div class="col-md-1 bg-gradient-success sidebar  side">
 
-        <div class="input-group">
-            <input type="text" class="form-control search-field" name="f" placeholder="Please Search Food" />
-            <div class="input-group-btn">
-                <button type="submit" style="border-radius: 0px;" class="btn btn-success">Search</button>
+            <div id="items">
+                @{
+                    var myList = Model.GroupBy(x => x.Category)
+                        .Select(x => new { x = x.Key, Category = x });
+                }
+                <button id="btn1">
+                    <a onclick="getsidebar(this)" id="menu-h">Menu:</a>
+                </button>
+                @foreach (var items in myList)
+                {
+
+                    <button id="btn"><a onclick="getsidebar(this)" id="font">@Html.DisplayFor(modelItem => items.x)</a></button>
+                }
+
             </div>
         </div>
-    </form>
-</div>
-<div class="row" style="margin-top: 10px">
-    <div class="col-md-2">
+        <div class="col-md-6">
 
-        <ul id="items">
-            <li>All</li>
-            <li>Pizza</li>
-            <li>Tandoori</li>
-            <li>Indian</li>
-            <li>Fast Food</li>
-            <li>Chinese Mians</li>
-            <li>Chicken Cury</li>
-            <li>Beef Fry</li>
-            <li>Hot Dog</li>
-            <li>Shawarma</li>
-            <li>Pasta</li>
-            <li>Biryani</li>
-            <li>Chinese Mians</li>
-            <li>Chicken Cury</li>
-            <li>Beef Fry</li>
-            <li>Hot Dog</li>
-            <li>Shawarma</li>
-            <li>Pasta</li>
-            <li>Biryani</li>
-        </ul>
+            <div class="row">
 
+                <div>
 
-    </div>
-
-
-    <div class="col-md-5">
-
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#home">New Order</a>
-            </li>
-            @if (Context.Session.GetString("Role") == "Admin")
-            {
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Orders" asp-action="GoingOrder">On Going Order</a>
-                </li>
-            }
-        </ul>
-
-
-
-        <div class="card-deck" id="Card" style=" overflow:auto; max-height:400px; max-width:600px; padding-left:16px">
-            @foreach (var item in Model)
-            {
-                photoPath = "~/images/" + item.PhotoUrl;
-                <div class="row">
-                    <div class="card m-3 parent_div" style="width: 90px">
-                        <div class="card-header">
-                            <p class="card-title" id="name">@item.Name</p>
-                        </div>
-                        <div class="check">
-
-                            <a class="press" style="cursor: pointer">
-                                <img class="card-img" src="@photoPath" asp-append-version="true" />
-                            </a>
-                        </div>
-                        <div class="card-footer">
-
-                            <h6 id="price">@item.PriceFull</h6>
-                        </div>
-
-                    </div>
                 </div>
-            }
+                <div class="col-md-12 mb-1 ml-2 mt-3">
+                    <form class="navbar-search" action="/Produces/Tablet">
 
+                        <div class="input-group">
+                            <input type="text" class="form-control search-field" name="f" placeholder="Please Search Food" />
+                            <div class="input-group-btn">
+                                <button type="submit" style="        border-radius: 0px;" class="btn btn-success">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
+            <ul class="nav nav-tabs mt-1  ml-2">
+                <li class="nav-item">
+                    <a id="link" class="nav-link " onclick="getsidebar(this)">DesiFood</a>
+                </li>
+
+
+                <li class="nav-item" style="padding-left:2px">
+                    <a id="link" class="nav-link " onclick="getsidebar(this)">FastFood</a>
+                </li>
+                <li class="nav-item" style="padding-left:2px">
+                    <a id="link" class="nav-link " onclick="getsidebar(this)">Drinks</a>
+                </li>
+                @if (Context.Session.GetString("Role") == "Admin")
+                {
+                    <li class="nav-item" style="padding-left:2px">
+                        <a id="link" class="nav-link" asp-controller="Orders" asp-action="GoingOrder">On Going Order</a>
+                    </li>
+                }
+            </ul>
+
+            <div class="card-deck ml-1" id="Card" style="overflow-y:auto; max-height:600px;">
+                @foreach (var item in Model)
+                {
+                    counter = counter + 1;
+                    photoPath = "~/images/" + item.PhotoUrl;
+                    <div class="row">
+                        <div class="card mt-1 ml-3  parent_div" id="@counter" style="height: 169px">
+
+                            <p class="bottom-right" id="name">@item.Name</p>
+
+                            <div class="check">
+                                <a class="press" style="cursor: pointer">
+                                    <img class="card-img" src="@photoPath" asp-append-version="true" />
+                                </a>
+                                <span class="badge badge-dark">@item.PriceFull</span>
+                            </div>
+                            <h6 id="desc">@item.Description</h6><hr />
+                            <div class="card-body" id="item-body">
+                                <button class="btn btn-sm price-btn" onclick="addFull(@counter)" id="price" value="@item.PriceFull">Full @*@item.PriceFull*@</button>
+                                @{
+                                    if (item.PriceMedium != null && item.PriceHalf != null)
+                                    {
+                                        <button class="btn btn-sm price-btn" onclick="addMedium(@counter)" id="priceMedium" value="@item.PriceMedium">Med @*@item.PriceMedium*@</button>
+                                        <button class="btn btn-sm price-btn"  onclick="addHalf(@counter)" id="priceHalf" value="@item.PriceHalf">Half @*@item.PriceHalf*@</button>
+
+                                    }
+                                    else if (item.PriceHalf != null)
+                                    {
+                                        <button class="btn btn-sm price-btn" onclick="addHalf(@counter)" id="priceHalf" value="@item.PriceHalf">Half @*@item.PriceHalf*@</button>
+
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
-    </div>
+        <div class="col-md-5 mt-3" >
+            <!----------Table Cart ------------->
+            <div id="cart" class="card shadow ">
 
+                <div class="card-body" style="overflow-y:auto; max-width: 550px; ">
 
+                    <table id="tblSkills" class="table table-light table-striped" width="100%" cellpadding="0" cellspacing="0" >
+                        <thead style="border: 1px solid black; background-color:ghostwhite">
+                            <tr>
+                                <th>Name</th>
+                                <th>Qnty</th>
+                                <th>Size</th>
+                                <th>Price</th>
+                                <th>SubTotal</th>
+                                <th colspan="4">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                        </tbody>
+                    </table>
 
-    <div class="col-md-5">
+                    <input type="submit" value="Place Order" id="placeorder" class="btn btn-success" />
+                    <a asp-action="CancelOrder" id="cancelOrder" asp-controller="Produces" asp-route-id="@Context.Session.GetString("id")" class="btn btn-danger">Cancel Order</a>
 
-        <div class="table-responsive">
-            <table id="tblSkills" class="table table-bordered" width="100%" cellpadding="0" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>SubTotal</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-
-            <input type="submit" value="Place Order" id="placeorder" class="btn btn-success" />
-
-
+                </div>
+            </div>
         </div>
     </div>
 </div>
+   
 @section Scripts{
     <script>
+
+        $(document).ready(function () {
+            setTimeout(function () {
+                console.log("Hello")
+                 $("#cancelOrder").hide('blind', {}, 5000)
+    }, 10000);
+        })
+
+        var sidebar_value;
+        function getsidebar(value) {
+            sidebar_value = value.text;
+             $.ajax({
+                type: "POST",
+                url: "/Produces/sidebar",
+                data: {
+                    value: sidebar_value
+                },
+                 success: function (data) {
+                    var html1 = '';
+                    let counter = 0;
+                    $.each(data, function (id, index) {
+                        counter = counter +1;
+
+                        html1 += '<div class="row">'+
+'                        <div class="card mt-1 ml-3 mb-2 parent_div" id="'+counter+'" style="height: 169px">'+
+''+
+'                            <p class="bottom-right" id="name">' + index.name + '</p>'+
+''+
+'                            <div class="check">'+
+'                                <a class="press" style="cursor: pointer">'+
+'                                    <img class="card-img" src="/images/' + index.photoUrl + '"/>'+
+'                                </a>'+
+'                                <span class="badge badge-dark">' + index.priceFull + '</span>'+
+'                            </div>'+
+'                            <h6 id="desc">' + index.description + '</h6><hr />'+
+'                            <div class="card-body" id="item-body">'+
+'                                <button class="btn btn-sm price-btn"  onclick="addFull(' + counter + ')" id="price" value="' + index.priceFull + '">Full </button>';
+                        if (index.priceMedium != null && index.priceHalf != null) {
+
+                            html1 += '<button class="btn btn-sm price-btn" onclick="addMedium(' + counter + ')" id="priceMedium" value="' + index.priceMedium + '">Med </button>';
+                            html1 += '<button class="btn btn-sm price-btn" onclick="addHalf(' + counter + ')" id="priceHalf" value="' + index.priceHalf +'">Half </button>';
+                        }  else if (index.priceHalf != null)
+                        {
+                            html1 += '<button class="btn btn-sm price-btn" onclick="addHalf(' + counter + ')" id="priceHalf" value="' + index.priceHalf +'">Half </button>';
+                        }
+                    html1+='</div>'+
+                    '</div>'+
+                '</div>';
+	
+
+                    });
+                    $(".card-deck").html("");
+                    $(".card-deck").html(html1);
+                }
+            });
+        }
+
+        var x;
         var Price = 0;
         var itemSubtotal = 0;
-        $(document).ready(function () {
-            $(".press").one("click",function () {
-                var closestDiv = $(this).closest(".parent_div");
-                var itemName = closestDiv.find("#name").text();
-                var itemPrice = closestDiv.find("#price").text();
-                var itemQuantity = 1;
-                itemSubtotal = itemQuantity * itemPrice;
-                var tbody = $("#tblSkills > TBODY")[0];
-                var row = tbody.insertRow(-1);
+        var itemName = null;
+        var itemPrice = null;
+        var itemPrice2 = null;
+        var itemPrice3 = null;
 
-                var cell = $(row.insertCell(-1));
-                cell.html(itemName);
+        function addFull(x) {
 
-                cell = $(row.insertCell(-1));
-                cell.html(itemQuantity);
+            var closestDiv = $("#" + x).closest(".parent_div");
+            itemName = closestDiv.find("#name").text();
+            itemPrice = closestDiv.find("#price").val();
+            itemSubtotal = itemPrice;
 
-                cell = $(row.insertCell(-1));
-                cell.html(itemPrice);
+            var exist = false;
+            $('#tblSkills tbody tr').each(function () {
+                var item = $(this).find("#name").html();
+                var size = $(this).find("#size").html();
+                console.log(size);
+                if (item == itemName && size == "Full") {
+                    countIncrement(this);
+                    exist = true;
+                }
+            });
+            if (!exist) {
 
-                cell = $(row.insertCell(-1));
-                cell.html(itemSubtotal);
+                var row = $("#tblSkills > TBODY")[0].insertRow(-1);
+                $(row.insertCell(-1)).attr("id", "name").html(itemName);
+                $(row.insertCell(-1)).html(1);
+                $(row.insertCell(-1)).attr("id", "size").html('Full');
+                $(row.insertCell(-1)).html(itemSubtotal);
+                $(row.insertCell(-1)).html(itemSubtotal);
 
-                cell = $(row.insertCell(-1));
-                 var btnIncrementCounter = $("<input/>");
+                var btnIncrementCounter = $("<input/>");
                 btnIncrementCounter.attr("type", "button");
                 btnIncrementCounter.attr("onclick", "countIncrement(this);");
                 btnIncrementCounter.attr("class", "btn btn-success btn-sm ");
                 btnIncrementCounter.val("+");
-                cell.append(btnIncrementCounter);
+                $(row.insertCell(-1)).append(btnIncrementCounter);
 
-
-                cell = $(row.insertCell(-1));
                 var btnDecrementCounter = $("<input/>");
                 btnDecrementCounter.attr("type", "button");
                 btnDecrementCounter.attr('onclick', 'countDecrement(this);');
                 btnDecrementCounter.attr("class", "btn btn-info btn-sm")
                 btnDecrementCounter.val("-");
-                cell.append(btnDecrementCounter);
+                $(row.insertCell(-1)).append(btnDecrementCounter);
 
-                cell = $(row.insertCell(-1));
                 var btnRemove = $("<input/>");
                 btnRemove.attr("type", "button");
                 btnRemove.attr("onclick", "Remove(this);")
                 btnRemove.attr("class", "btn btn-danger btn-sm")
                 btnRemove.val("x");
-                cell.append(btnRemove);
+                $(row.insertCell(-1)).append(btnRemove);
 
+            }
+    }
+
+        function addMedium(x) {
+
+            var closestDiv = $("#"+x).closest(".parent_div");
+            itemName = closestDiv.find("#name").text();
+            itemPrice1= closestDiv.find("#priceMedium").val();
+            itemSubtotal = itemPrice1;
+
+             var exist = false;
+            $('#tblSkills tbody tr').each(function () {
+                var item = $(this).find("#name").html();
+                var size = $(this).find("#size").html();
+                console.log(size);
+                if (item == itemName && size == "Medium") {
+                    countIncrement(this);
+                    exist = true;
+                }
             });
-        });
-          function countIncrement(button) {
+
+            if (!exist) {
+
+                var row = $("#tblSkills > TBODY")[0].insertRow(-1);
+                $(row.insertCell(-1)).attr("id", "name").html(itemName);
+                $(row.insertCell(-1)).html(1);
+                $(row.insertCell(-1)).attr("id", "size").html('Medium');
+                $(row.insertCell(-1)).html(itemSubtotal);
+                $(row.insertCell(-1)).html(itemSubtotal);
+
+                var btnIncrementCounter = $("<input/>");
+                btnIncrementCounter.attr("type", "button");
+                btnIncrementCounter.attr("onclick", "countIncrement(this);");
+                btnIncrementCounter.attr("class", "btn btn-success btn-sm ");
+                btnIncrementCounter.val("+");
+                $(row.insertCell(-1)).append(btnIncrementCounter);
+
+                var btnDecrementCounter = $("<input/>");
+                btnDecrementCounter.attr("type", "button");
+                btnDecrementCounter.attr('onclick', 'countDecrement(this);');
+                btnDecrementCounter.attr("class", "btn btn-info btn-sm")
+                btnDecrementCounter.val("-");
+                $(row.insertCell(-1)).append(btnDecrementCounter);
+
+                var btnRemove = $("<input/>");
+                btnRemove.attr("type", "button");
+                btnRemove.attr("onclick", "Remove(this);")
+                btnRemove.attr("class", "btn btn-danger btn-sm")
+                btnRemove.val("x");
+                $(row.insertCell(-1)).append(btnRemove);
+            }
+        }
+
+        function addHalf(x) {
+            var closestDiv = $("#" + x).closest(".parent_div");
+            itemName = closestDiv.find("#name").text();
+            itemPrice2 = closestDiv.find("#priceHalf").val();
+            itemSubtotal = itemPrice2;
+
+            var exist = false;
+            $('#tblSkills tbody tr').each(function () {
+                var item = $(this).find("#name").html();
+                var size = $(this).find("#size").html();
+                console.log(size);
+                if (item == itemName && size == "Half") {
+                    countIncrement(this);
+                    exist = true;
+                }
+            });
+
+            if (!exist) {
+
+                var row = $("#tblSkills > TBODY")[0].insertRow(-1);
+                $(row.insertCell(-1)).attr("id", "name").html(itemName);
+                $(row.insertCell(-1)).html(1);
+                $(row.insertCell(-1)).attr("id", "size").html('Half');
+                $(row.insertCell(-1)).html(itemSubtotal);
+                $(row.insertCell(-1)).html(itemSubtotal);
+
+                var btnIncrementCounter = $("<input/>");
+                btnIncrementCounter.attr("type", "button");
+                btnIncrementCounter.attr("onclick", "countIncrement(this);");
+                btnIncrementCounter.attr("class", "btn btn-success btn-sm ");
+                btnIncrementCounter.val("+");
+                $(row.insertCell(-1)).append(btnIncrementCounter);
+
+                var btnDecrementCounter = $("<input/>");
+                btnDecrementCounter.attr("type", "button");
+                btnDecrementCounter.attr('onclick', 'countDecrement(this);');
+                btnDecrementCounter.attr("class", "btn btn-info btn-sm")
+                btnDecrementCounter.val("-");
+                $(row.insertCell(-1)).append(btnDecrementCounter);
+
+                var btnRemove = $("<input/>");
+                btnRemove.attr("type", "button");
+                btnRemove.attr("onclick", "Remove(this);")
+                btnRemove.attr("class", "btn btn-danger btn-sm")
+                btnRemove.val("x");
+                $(row.insertCell(-1)).append(btnRemove);
+
+            }
+        }
+
+        function countIncrement(button) {
                 var row = $(button).closest("TR");
                 var oldvalue = $("TD", row).eq(1).html();
-                 var itemPrice = $("TD", row).eq(2).html();
+                 var itemPrice = $("TD", row).eq(3).html();
                  if (oldvalue >= 1) {
                      itemQuantity = parseInt(oldvalue) + 1;
                      itemSubtotal = itemQuantity * itemPrice;
                      $("TD", row).eq(1).html(itemQuantity);
-                     $("TD", row).eq(3).html(itemSubtotal);
+                     $("TD", row).eq(4).html(itemSubtotal);
                  }
               };
 
-            function countDecrement(button) {
-                var row = $(button).closest("TR");
-                var oldvalue = $("TD", row).eq(1).html();
-                var itemPrice = $("TD", row).eq(2).html();
-                if (oldvalue > 1) {
-                    itemQuantity = parseInt(oldvalue) - 1;
-                    itemSubtotal = parseInt(itemQuantity * itemPrice);
-                    $("TD", row).eq(1).html(itemQuantity);
-                    $("TD", row).eq(3).html(itemSubtotal);
-                }
-            };
+        function countDecrement(button) {
+            var row = $(button).closest("TR");
+            var oldvalue = $("TD", row).eq(1).html();
+            var itemPrice = $("TD", row).eq(3).html();
+            if (oldvalue > 1) {
+                itemQuantity = parseInt(oldvalue) - 1;
+                itemSubtotal = parseInt(itemQuantity * itemPrice);
+                $("TD", row).eq(1).html(itemQuantity);
+                $("TD", row).eq(4).html(itemSubtotal);
+            }
+        };
 
-            function Remove(button) {
-                //Determine the reference of the Row using the Button.
-                var row = $(button).closest("TR");
-                var name = $("TD", row).eq(0).html();
-                if (confirm("Do you want to delete:" + name)) {
-                    //Get the reference of the Table.
-                    var table = $("#tblSkills")[0];
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete:" + name)) {
+                //Get the reference of the Table.
+                var table = $("#tblSkills")[0];
 
-                    //Delete the Table row using it's Index.
-                    table.deleteRow(row[0].rowIndex);
-                }
-            };
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
+
         $("#placeorder").click(function () {
             //Loop throughthe Table rows and build a JSON array.
             var skills = new Array();
@@ -231,23 +578,22 @@
                 var OrderDetail = {};
                 OrderDetail.Name = row.find("TD").eq(0).html();
                 OrderDetail.Quantity = row.find("TD").eq(1).html();
-                OrderDetail.Price = row.find("TD").eq(2).html();
+                OrderDetail.Size = row.find("TD").eq(2).html();
+                OrderDetail.Price = row.find("TD").eq(3).html();
                 OrderDetail.SubTotal = row.find("TD").eq(3).html();
                 OrderDetail.OrderId = @Context.Session.GetString("id");
-                itemSubtotal = parseInt(row.find("TD").eq(3).html());
+                itemSubtotal = parseInt(row.find("TD").eq(4).html());
                 skills.push(OrderDetail);
                 Price = parseInt(Price + itemSubtotal);
-
             });
-
-
             //Send the JSON array to Controller using AJAX.
             $.ajax({
                 type: "POST",
                 url: "/OrderDetails/CreateOrder",
                 data: {
                     orderDetails: skills,
-                    OrderPrice: Price
+                    OrderPrice: Price,
+                    kitchenDetails: skills,
                 },
                 success: function (r) {
                     alert(r + " record(s) inserted.");
@@ -258,7 +604,4 @@
 
     </script>
 }
-
-
-
 

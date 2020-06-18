@@ -1,1 +1,463 @@
 ﻿
+
+@model IEnumerable<SmartFoodRestaurantSystem.Models.Order>
+
+
+<html lang="en">
+<head>
+    <style>
+        #orders {
+            border: 1px solid #1cc88a;
+        }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            right: -10px;
+            padding: 5px 10px;
+            background-color: black;
+            color: white;
+        }
+
+        .card-header {
+            background-color: white;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        #check {
+            position: absolute;
+            z-index: 0;
+            font-size: 110px;
+            margin-left: 33%;
+        }
+
+
+        .gradient-template {
+            color: #ffffff;
+            background: -webkit-linear-gradient(left, #1cc88a, #decbfd);
+            background: -moz-linear-gradient(left, #1cc88a, #decbfd);
+            background: -o-linear-gradient(left, #1cc88a, #decbfd);
+            background: linear-gradient(left, #1cc88a, #decbfd);
+            background-size: 101%;
+        }
+
+            .gradient-template a {
+                color: #ffffff;
+            }
+
+
+
+        .order {
+            margin-left: 15px;
+            margin-top: -45px;
+        }
+
+        #chef-img {
+            width: 100px;
+            height: 110px;
+        }
+
+        .card-title {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row" style="margin-top:-8px;">
+        <div class="banner gradient-template col-md-12  pb-5">
+            <h2 class="text-center my-5 font-weight-light">Al-Fajar FoodyZone, Start Exploring!</h2>
+        </div>
+    </div>
+
+
+    <!-- Content Row -->
+    <div class="row" style="margin-top:-50px;">
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-7  mb-2">
+            <div class="card  border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Orders</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.count</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-2">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Pending Orders</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">15</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-2">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Earning</div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">Rs: @ViewBag.Sale</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Requests Card Example -->
+        <div class="col-xl-3 col-md-6 mb-2">
+            <div class="card border-left-warning shadow py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Profit & Loss</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rs: @ViewBag.Profit</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+
+            <p id="check" class="text-gray-400">Orders</p>
+            <marquee direction="left" scrollamount="10">
+                <div class="card-deck ml-4 mb-1" style="width: 2000px">
+
+                    @foreach (var item in Model)
+
+                    {
+                        @if (item.Status != "Completed")
+                        {
+
+                            <div class="card " style="height:230px; ">
+                                <div class="card-header d-flex justify-content-between align-items-center" style="border-bottom:0;opacity:1.6">
+                                    <h4 class="card-title ">Order: @item.Id</h4>
+                                    <span class="badge badge-dark">Ordered</span>
+                                </div>
+
+
+
+                                <div class="card-body pt-0">
+                                    <div class="row">
+                                        <div class="col-xl-3 col-sm-5 col-xxl-5 align-items-center d-flex justify-content-center">
+                                            <div class="order">
+                                                <span>
+                                                    <img id="chef-img" src="~/images/119-512.png" />
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-8 col-sm-7 col-xxl-7 align-items-center d-flex mt-3 mt-sm-0">
+                                            <div class="row flex-fill">
+                                                <div class="col-xl-6 col-xxl-12">
+                                                    <ul class="order__info">
+                                                        <li>
+                                                            <div class="media">
+                                                                <div class="status__icon">
+                                                                    <i class="fas fa-user text-danger" aria-hidden="true"></i>
+                                                                </div>
+                                                                <div class="media-body ml-2">
+                                                                    <span class="d-block ">Order Handed</span>
+                                                                    <h6 style="color:black">@item.Name</h6>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+
+                                                        <li>
+                                                            <div class="media">
+                                                                <div class="status__icon">
+                                                                    <i class="fas fa-clock text-info" aria-hidden="true"></i>
+                                                                </div>
+                                                                <div class="media-body ml-2">
+                                                                    <span class="d-block ">Ordered</span>
+                                                                    <h6 style="color:black">3/25/2020</h6>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="media">
+                                                                <div class="status__icon">
+                                                                    <i class="fa fa-table text-success" aria-hidden="true"></i>
+                                                                </div>
+                                                                <div class="media-body ml-2">
+                                                                    @if (item.TableNumber == 12345)
+                                                                    {
+                                                                        <span class="d-block ">Order:</span>
+                                                                        <h6 style="color:black">Take Away</h6>
+
+                                                                    }
+                                                                    else if (item.TableNumber == 123456)
+                                                                    {
+                                                                        <span class="d-block ">Order:</span>
+                                                                        <h6 style="color:black">Delivery</h6>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="d-block ">Table No:</span>
+                                                                        <h6 style="color:black">@item.TableNumber</h6>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </marquee>
+        </div>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+
+        <!-- Area Chart -->
+        <div class="col-xl-12 col-lg-12">
+            <div class="car  mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="car-header  d-flex flex-row align-items-center justify-content-between">
+                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Earnings Monthly</a>
+
+
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="myAreaChart"></canvas>
+                    </div>
+                    <div class="py-1">
+                        <i class="fas fa-clock text-info" aria-hidden="true"></i>      5-20-2020
+
+                        <a href="/OrderLists/SaleReport" style="float:right" class="d-none py-1 d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+    <!-- Content Row -->
+    <div class="row">
+        <div class="col-lg-7 mb-1">
+            <!-- Bar Chart -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Profit & Loss</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-bar">
+                        <canvas id="myBarChart"></canvas>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-5 col-lg-5 mb-1">
+            <!-- Pie Chart -->
+
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">FeedBack Overview</h6>
+
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="chart-pie pt-4 pb-2">
+                        <canvas id="myPieChart"></canvas>
+                    </div>
+                    <div class="mt-4 text-center small">
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-primary"></i> Excellent
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-success"></i> Average
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-info"></i> Bad
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Illustrations -->
+
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6 mb-1">
+
+                <!-- Illustrations -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Al-Fajar Policy</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img class="img-fluid px-3 px-sm-4 mt-1 mb-1" style="width: 25rem;" src="~/images/21284781.jpg" alt="">
+                        </div>
+                        <p>Al-Fajar is a Restaurant located on a busy corner site in Sambrial Sialkot.With glazed frontage on two sides of building overlooking the market and a bustling Chenab Canal.</p>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow mb-1">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Al-Fajar Approach</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img class="img-fluid px-3 px-sm-4 mt-1 mb-2" style="width: 25rem;" src="~/images/28267079.jpg" alt="">
+                        </div>
+                        <p>Al-Fajar is a Restaurant located on a busy corner site in Sambrial Sialkot.With glazed frontage on two sides of building overlooking the market and a bustling Chenab Canal.</p>
+                        <p class="mb-0"> With glazed frontage on two sides of building overlooking the market and a bustling Chenab Canal.</p>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Card Example -->
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4 ">
+        <div class="card-header py-3" style="border-bottom: none">
+            <h6 class="m-0 font-weight-bold text-danger">Orders List</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+
+
+                <table class="table  table-hover " id="dataTable" width="100%" cellspacing="0">
+                    <thead style="background-color:#1cc88a; color:white; ">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Id)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.TableNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Date)
+                            </th>
+
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TableNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Date)
+                                </td>
+
+                                <td>
+
+                                    <a asp-action="Show" asp-controller="Orders" asp-route-id="@item.Id" class="btn btn-danger">Show</a>
+
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- /.container-fluid -->
+    <!-- End of Main Content -->
+
+    <div id="excellentPercent" style="display:none">@ViewBag.excellentPercent</div>
+    <div id="avgPercent" style="display:none">@ViewBag.avgPercent</div>
+    <div id="badPercent" style="display:none">@ViewBag.badPercent</div>
+
+    <div id="jan" style="display:none">@ViewBag.jan</div>
+    <div id="feb" style="display:none">@ViewBag.feb</div>
+    <div id="mar" style="display:none">@ViewBag.mar</div>
+    <div id="apr" style="display:none">@ViewBag.apr</div>
+    <div id="may" style="display:none">@ViewBag.may</div>
+    <div id="jun" style="display:none">@ViewBag.jun</div>
+    <div id="jul" style="display:none">@ViewBag.jul</div>
+    <div id="aug" style="display:none">@ViewBag.aug</div>
+    <div id="sep" style="display:none">@ViewBag.sep</div>
+    <div id="oct" style="display:none">@ViewBag.oct</div>
+    <div id="nov" style="display:none">@ViewBag.nov</div>
+    <div id="dec" style="display:none">@ViewBag.dec</div>
+
+
+    <div id="salePercent" style="display:none"> @ViewBag.Sale</div>
+    <div id="lossPercent" style="display:none"> @ViewBag.Loss</div>
+    <div id="profitPercent" style="display:none"> @ViewBag.Profit</div>
+
+
+
+
+</body>
+
+</html>

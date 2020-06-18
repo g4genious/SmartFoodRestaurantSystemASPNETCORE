@@ -23,14 +23,27 @@ namespace SmartFoodRestaurantSystem.Controllers
         // GET: OrderDetails
         public async Task<IActionResult> Index()
         {
+
             return View(await _context.OrderDetail.ToListAsync());
         }
 
-        public async Task<IActionResult> Kitchen()
+        public IActionResult Kitchen()
         {
-            return View(await _context.OrderDetail.ToListAsync());
-        }
 
+            IList<KitchenViewDB> Details = (from o in _context.Order
+                                            join d in _context.OrderDetail on o.Id equals d.OrderId
+                                            where o.Status == "pending"
+                                            select new KitchenViewDB
+                                            {
+                                                Id = o.Id,
+                                                Name = d.Name,
+                                                Quantity = d.Quantity,
+                                                TableNumber = o.TableNumber,
+                                                Size = d.Size
+                                            }).ToList<KitchenViewDB>();
+
+            return View(Details);
+        }
         public JsonResult CreateOrder(IList<OrderDetail> orderDetails, int orderprice)
 
         {

@@ -34,15 +34,15 @@ namespace SmartFoodRestaurantSystem.Controllers
         [HttpPost]
         public IActionResult Login(User user)
         {
-            var check = _context.User.Where(e => e.Name == user.Name && e.Password == user.Password && e.Role == user.Role).FirstOrDefault();
+            var check = _context.User.Where(e => e.Name == user.Name && e.Password == user.Password).FirstOrDefault();
             if(check != null)
             {
-                HttpContext.Session.SetString("Role",user.Role);
-                if (HttpContext.Session.GetString("Role") == "Admin")
+                HttpContext.Session.SetString("Role",user.Name);
+                if (user.Name == "Admin")
                     return RedirectToAction("Index", "Home");
-                else if (HttpContext.Session.GetString("Role") == "Tablet")
+                else if (user.Name == "Tablet")
                     return RedirectToAction("DinningTables", "Orders");
-               else if(HttpContext.Session.GetString("Role") == "Kitchen")
+               else if(user.Name == "Kitchen")
                     return RedirectToAction("Kitchen", "OrderDetails");
             }
 

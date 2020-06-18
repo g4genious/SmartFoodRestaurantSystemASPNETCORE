@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SmartFoodRestaurantSystem.Models;
 
@@ -17,6 +18,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         {
             _context = context;
         }
+
 
         // GET: FeedBacks
         public async Task<IActionResult> Index()
@@ -42,6 +44,11 @@ namespace SmartFoodRestaurantSystem.Controllers
             return View(feedBack);
         }
 
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
         // GET: FeedBacks/Create
         public IActionResult Create()
         {
@@ -53,13 +60,13 @@ namespace SmartFoodRestaurantSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description,Environment,Staff,Food")] FeedBack feedBack)
+        public async Task<IActionResult> Create(FeedBack feedBack)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(feedBack);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create));
             }
             return View(feedBack);
         }
@@ -85,7 +92,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("Id,Description,Environment,Staff,Food")] FeedBack feedBack)
+        public async Task<IActionResult> Edit(int? id, FeedBack feedBack)
         {
             if (id != feedBack.Id)
             {

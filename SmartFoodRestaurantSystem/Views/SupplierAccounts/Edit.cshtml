@@ -15,8 +15,38 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="SupplierId" class="control-label"></label>
-                <input asp-for="SupplierId" class="form-control" />
+                <select asp-for="SupplierId" class="form-control" asp-items="ViewBag.SupplierId"></select>
                 <span asp-validation-for="SupplierId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Debit" class="control-label"></label>
+                <input asp-for="Debit" class="form-control" />
+                <span asp-validation-for="Debit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Credit" class="control-label"></label>
+                <input asp-for="Credit" class="form-control" />
+                <span asp-validation-for="Credit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Balance" class="control-label"></label>
+                <input asp-for="Balance" class="form-control" />
+                <span asp-validation-for="Balance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GrandTotal" class="control-label"></label>
+                <input asp-for="GrandTotal" class="form-control" />
+                <span asp-validation-for="GrandTotal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

@@ -9,11 +9,13 @@ namespace SmartFoodRestaurantSystem.Models
         [Key]
         public int Id { get; set; }
         public int? TableNumber { get; set; }
+
+
         public DateTime? Date { get; set; }
         public int? TotalAmount { get; set; }
         public string? OrderID { get; set; }
         public int? Discount { get; set; }
         public int? ServiceCharges { get; set; }
-        public int? GrandTotal { get; set; }
+        public int GrandTotal { get; set; }
     }
 }

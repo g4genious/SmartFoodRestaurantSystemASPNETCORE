@@ -1,0 +1,139 @@
+﻿
+@{
+    ViewData["Title"] = "AboutUs";
+}
+<style>
+    .discover-section {
+      
+        display: flex;
+ margin-left: 25px;
+ margin-bottom: 50px;
+    }
+
+    .food-item {
+        height: 400px;
+        width: 240px;
+        margin-left: 20px;
+        margin-right: 20px;
+        text-align: center;
+    }
+    .food-ite {
+        height: 300px;
+        width: 240px;
+        margin-left: 20px;
+        margin-bottom:30px;
+        margin-right: 20px;
+        text-align: center;
+    }
+
+    .food-overla {
+        position: absolute;
+
+        right: 30px;
+        top: 20px;
+        width: 100%;
+        height: 50%;
+    }
+
+    .food-borde {
+        border: 2px solid #1cc88a;
+        position: relative;
+    }
+
+
+
+    .discover-h1 {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        color: #1cc88a;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: center;
+    }
+    .discove-h1 {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        color: #1cc88a;
+    
+        display: flex;
+        justify-content: center;
+    }
+
+
+    .food-item p {
+        color: black;
+        font-size: 16px;
+        padding: 3px;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+
+
+    .food-border {
+        border: 2px solid #1cc88a;
+        position: relative;
+    }
+
+
+    .food-overlay {
+        padding-top: 50px;
+        background-color: white;
+        border: 2px solid #1cc88a;
+        position: absolute;
+        border-bottom-left-radius: 35px;
+        right: 20px;
+        top: 20px;
+        width: 100%;
+        height: 100%;
+    }
+
+    img {
+       
+        width: 230px;
+        height: 300px;
+        border-left: 3px solid #1cc88a;
+        border-bottom-left-radius: 35px;
+    }
+</style>
+<div class="row mt-2">
+    <div class="discover-section">
+        <div class="col-md-3">
+
+            <div class="food-item  food-border">
+                <div class="food-overlay">
+                    <h1 class="discover-h1">Our Story</h1>
+                    <h5 class="discover-h1">Al-Fajar Restaurant</h5>
+                    <p>Al-Fajar is a Restaurant located on a busy corner site in Sambrial Sialkot.With glazed frontage on two sides of building overlooking the market and a bustling Chenab Canal.</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <h1 class="discove-h1">Our Glory</h1>
+        <h5 class="discove-h1">Al-Fajar Restaurant</h5>
+        <p style="color:black" >Al-Fajar is a Restaurant located on a busy corner site in Sambrial Sialkot.With glazed frontage on two sides of building overlooking the market <span style="margin-left: 26px;"> and a bustling Chenab Canal.Al-Fajar is a Restaurant located on a busy corner site in Sambrial With glazed frontage on two sides.</span></p>
+
+        <div class="col-md-12">
+            <div class="row justify-content-center">
+                <div class="food-ite  food-borde">
+                    <div class="food-overla">
+
+                        <img src="~/images/joyce-romero-FP1nAPbqipw-unsplash.jpg" />
+                    </div>
+                </div>
+                <div class="food-ite  food-borde">
+                    <div class="food-overla">
+                        <img src="~/images/joseph-gonzalez-fdlZBWIP0aM-unsplash.jpg" />
+
+                    </div>
+                </div>
+                <div class="food-ite  food-borde">
+                    <div class="food-overla">
+                        <img src="~/images/stil-u2Lp8tXIcjw-unsplash (1).jpg" />
+
+                    </div>
+                </div>
+
+            </div>
+            </div>
+            </div>
+
+        </div>

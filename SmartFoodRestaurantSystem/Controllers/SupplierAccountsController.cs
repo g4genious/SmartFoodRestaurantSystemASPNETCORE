@@ -17,11 +17,30 @@ namespace SmartFoodRestaurantSystem.Controllers
         {
             _context = context;
         }
+        public IActionResult supplierRemainings()
+        {
 
+            var list = _context.SupplierAccount.ToList().GroupBy(s => s.SupplierId).Select(s => s.LastOrDefault()).ToList();
+            return View(list);
+        }
         // GET: SupplierAccounts
         public async Task<IActionResult> Index()
         {
-            return View(await _context.SupplierAccount.ToListAsync());
+            var smartResturantContext = _context.SupplierAccount.Include(p => p.Supplier);
+            return View(await smartResturantContext.ToListAsync());
+        }
+
+        public IActionResult SupplierLedger(string supplierName, DateTime? dateTo, DateTime? dateFrom)
+        {
+            if (dateTo == null && dateFrom == null && supplierName == null)
+            {
+                return View(_context.SupplierAccount.ToList());
+            }
+            else
+            {
+                var RecordList = _context.SupplierAccount.Where(t => (t.Date >= dateFrom) && (t.Date <= dateTo) && (t.SupplierName == supplierName)).ToList();
+                return View(RecordList);
+            }
         }
 
         // GET: SupplierAccounts/Details/5
@@ -45,6 +64,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         // GET: SupplierAccounts/Create
         public IActionResult Create()
         {
+            ViewData["SupplierName"] = new SelectList(_context.Supplier, "Id", "Name");
             return View();
         }
 
@@ -53,14 +73,17 @@ namespace SmartFoodRestaurantSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,SupplierId")] SupplierAccount supplierAccount)
+        public async Task<IActionResult> Create(SupplierAccount supplierAccount)
         {
+
+
             if (ModelState.IsValid)
             {
                 _context.Add(supplierAccount);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["SupplierName"] = new SelectList(_context.Supplier, "Id", "Id", supplierAccount.SupplierId);
             return View(supplierAccount);
         }
 
@@ -77,7 +100,9 @@ namespace SmartFoodRestaurantSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["SupplierName"] = new SelectList(_context.Stock, "Id", "Id", supplierAccount.SupplierId);
             return View(supplierAccount);
+
         }
 
         // POST: SupplierAccounts/Edit/5
@@ -85,7 +110,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,SupplierId")] SupplierAccount supplierAccount)
+        public async Task<IActionResult> Edit(int id, SupplierAccount supplierAccount)
         {
             if (id != supplierAccount.Id)
             {
@@ -112,12 +137,14 @@ namespace SmartFoodRestaurantSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["SupplierName"] = new SelectList(_context.Stock, "Id", "Id", supplierAccount.SupplierId);
             return View(supplierAccount);
         }
 
         // GET: SupplierAccounts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();

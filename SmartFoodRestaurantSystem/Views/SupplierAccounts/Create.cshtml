@@ -3,30 +3,73 @@
 @{
     ViewData["Title"] = "Create";
 }
+<div class="container-fluid">
 
-<h1>Create</h1>
+    <div class="card o-hidden border-0 shadow-lg my-2 border-left-success">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Supplier Account!</h1>
+                        </div>
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group row">
+                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                    <label asp-for="SupplierId" class="control-label"></label>
+                                    <select asp-for="SupplierId" class="form-control" asp-items="ViewBag.SupplierName"></select>
+                                    <span asp-validation-for="SupplierId" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="Debit" class="control-label"></label>
+                                    <input asp-for="Debit" class="form-control" />
+                                    <span asp-validation-for="Debit" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="Description" class="control-label"></label>
+                                    <input asp-for="Description" class="form-control" />
+                                    <span asp-validation-for="Description" class="text-danger"></span>
 
-<h4>SupplierAccount</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="SupplierId" class="control-label"></label>
-                <input asp-for="SupplierId" class="form-control" />
-                <span asp-validation-for="SupplierId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                    <label asp-for="Balance" class="control-label"></label>
+                                    <input asp-for="Balance" class="form-control" />
+                                    <span asp-validation-for="Balance" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="GrandTotal" class="control-label"></label>
+                                    <input asp-for="GrandTotal" class="form-control" />
+                                    <span asp-validation-for="GrandTotal" class="text-danger"></span>
+                                    
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="Credit" class="control-label"></label>
+                                    <input asp-for="Credit" class="form-control" />
+                                    <span asp-validation-for="Credit" class="text-danger"></span>
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="Date" class="control-label"></label>
+                                    <input asp-for="Date" class="form-control" />
+                                    <span asp-validation-for="Date" class="text-danger"></span>
+
+                                </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Create" class="btn btn-primary" />
+                                </div>
+</form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

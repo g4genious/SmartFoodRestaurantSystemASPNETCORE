@@ -2,11 +2,14 @@
 
 @{
     ViewData["Title"] = "Dinning Tables";
+    var check = false;
+    var reserveTable = ViewBag.TablesData;
 }
 
 <style>
+
+
     .card {
-    
         width: 80px;
         border: 2px solid #1cc88a;
     }
@@ -17,52 +20,99 @@
     }
 
     .card-deck {
-        margin-left: 30%;
+        margin-left: 26%;
     }
 
     h2 {
         color: #1cc88a;
     }
 
-    a {
-        color: #1cc88a
-    }
-
-        a:hover {
-            color: red;
-            text-decoration: none;
-        }
 
     .card-header {
         height: 30px;
     }
-   
+
+    h6 {
+        color: #1cc88a;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    #button {
+        padding: 15px;
+        margin: 0px 5px 0px 5px;
+    }
 </style>
 
-<h1 class="h3 ml-3 mb-0 text-gray-800">Select Table</h1>
+<h1 class="h5 ml-3 mb-0 mt-3 text-gray-800">Select Table</h1>
+
 <div class="col-md-10">
     <div class="card-deck">
+
         @for (int i = 1; i <= 27; i++)
-
         {
-            <div class="row justify-content-md-center" style="padding: 3px">
-                <div class="card">
-                    <div class="card-header">
-                        <h6 class="m-0 font-weight-bold text-primary" id="name"><a asp-route-id="@i" asp-action="DinningTablesPost" asp-controller="Orders">G @i</a></h6>
+            foreach (var y in reserveTable)
+            {
+                if (y.TableNumber == i)
+                {
+
+                    <div id="b" class="row justify-content-md-center" style="padding: 3px ;color: red">
+                        <a>
+                            <div class="card" style="border-color: red ">
+                                <div class="card-header">
+                                    <h6 class="m-0 font-weight-bold" id="name" style="color: red">
+                                        T @i
+                                    </h6>
+                                </div>
+
+
+                                <div class="check">
+                                    <img src="~/images/dinner.png" />
+
+                                </div>
+                            </div>
+                        </a>
                     </div>
+                    check = true;
+                }
+            }
+            if (check != true)
+            {
+                <div id="b" class="row justify-content-md-center" style="padding: 3px">
+                    <a asp-route-id="@i" asp-action="DinningTablesPost" asp-controller="Orders">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="m-0 font-weight-bold" id="name">
+                                    T @i
+                                </h6>
+                            </div>
 
 
-                    <div class="check">
-                        <img src="~/images/dinner.png" />
+                            <div class="check">
+                                <img src="~/images/dinner.png" />
 
-                    </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </div>
+            }
+            check = false;
+
         }
 
-
     </div>
+
 </div>
 
 
+<div class="col-md-12 mb-4">
+    <hr />
+    <div class="row justify-content-center">
 
+
+        <button id="button" class="btn btn-success"><a style="color:white" asp-route-id="12345" asp-action="DinningTablesPost" asp-controller="Orders">Take Away</a></button>
+        <button id="button" class="btn" style="background-color: orange;"><a style="color:white" asp-route-id="123456" asp-action="DinningTablesPost" asp-controller="Orders">Delievery</a></button>
+    </div>
+</div>

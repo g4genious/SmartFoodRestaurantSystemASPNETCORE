@@ -26,19 +26,23 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   }
   return s.join(dec);
 }
+var sale = document.getElementById("salePercent").innerHTML;
+
+
+var prof = document.getElementById("profitPercent").innerHTML;
 
 // Bar Chart Example
 var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ["January", "February", "March", "April", "May", "June"],
+      labels: ["Sale", "Profit & Loss"],
     datasets: [{
       label: "Revenue",
       backgroundColor: "#4e73df",
       hoverBackgroundColor: "#2e59d9",
-      borderColor: "#4e73df",
-      data: [4215, 5312, 6251, 7841, 9821, 14984],
+        borderColor: "#4e73df",
+        data: [sale, prof],
     }],
   },
   options: {
@@ -54,7 +58,7 @@ var myBarChart = new Chart(ctx, {
     scales: {
       xAxes: [{
         time: {
-          unit: 'month'
+          unit: ''
         },
         gridLines: {
           display: false,
@@ -67,13 +71,13 @@ var myBarChart = new Chart(ctx, {
       }],
       yAxes: [{
         ticks: {
-          min: 0,
-          max: 15000,
+          min: -100000,
+          max: 100000,
           maxTicksLimit: 5,
           padding: 10,
           // Include a dollar sign in the ticks
           callback: function(value, index, values) {
-            return '$' + number_format(value);
+            return 'Rs' + number_format(value);
           }
         },
         gridLines: {
@@ -85,8 +89,8 @@ var myBarChart = new Chart(ctx, {
         }
       }],
     },
-    legend: {
-      display: false
+      legend: {
+          display: false
     },
     tooltips: {
       titleMarginBottom: 10,
@@ -103,7 +107,7 @@ var myBarChart = new Chart(ctx, {
       callbacks: {
         label: function(tooltipItem, chart) {
           var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+          return datasetLabel + ': Rs' + number_format(tooltipItem.yLabel);
         }
       }
     },

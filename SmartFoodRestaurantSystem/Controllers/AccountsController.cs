@@ -25,7 +25,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         }
 
         // GET: Accounts/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
             {
@@ -33,7 +33,7 @@ namespace SmartFoodRestaurantSystem.Controllers
             }
 
             var account = await _context.Account
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (account == null)
             {
                 return NotFound();
@@ -53,7 +53,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Type")] Account account)
+        public async Task<IActionResult> Create( Account account)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         }
 
         // GET: Accounts/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
             {
@@ -85,9 +85,9 @@ namespace SmartFoodRestaurantSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Type")] Account account)
+        public async Task<IActionResult> Edit(string id,  Account account)
         {
-            if (id != account.Id)
+            if (id != account.ID)
             {
                 return NotFound();
             }
@@ -101,7 +101,7 @@ namespace SmartFoodRestaurantSystem.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AccountExists(account.Id))
+                    if (!AccountExists(account.ID))
                     {
                         return NotFound();
                     }
@@ -116,7 +116,7 @@ namespace SmartFoodRestaurantSystem.Controllers
         }
 
         // GET: Accounts/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
             {
@@ -124,7 +124,7 @@ namespace SmartFoodRestaurantSystem.Controllers
             }
 
             var account = await _context.Account
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (account == null)
             {
                 return NotFound();
@@ -144,9 +144,9 @@ namespace SmartFoodRestaurantSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AccountExists(int id)
+        private bool AccountExists(string id)
         {
-            return _context.Account.Any(e => e.Id == id);
+            return _context.Account.Any(e => e.ID == id);
         }
     }
 }

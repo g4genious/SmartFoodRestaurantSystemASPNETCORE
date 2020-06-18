@@ -27,7 +27,21 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
+var jan = document.getElementById("jan").innerHTML;
+var feb = document.getElementById("feb").innerHTML;
+var mar = document.getElementById("mar").innerHTML;
+var apr = document.getElementById("apr").innerHTML;
+var may = document.getElementById("may").innerHTML;
+var jun = document.getElementById("jun").innerHTML;
+var jul = document.getElementById("jul").innerHTML;
+var aug = document.getElementById("aug").innerHTML;
+var sep = document.getElementById("sep").innerHTML;
+var oct = document.getElementById("oct").innerHTML;
+var nov = document.getElementById("nov").innerHTML;
+var dec = document.getElementById("dec").innerHTML;
+
 // Area Chart Example
+
 var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
@@ -35,18 +49,18 @@ var myLineChart = new Chart(ctx, {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [{
       label: "Earnings",
-      lineTension: 0.3,
-      backgroundColor: "rgba(78, 115, 223, 0.05)",
-      borderColor: "rgba(78, 115, 223, 1)",
-      pointRadius: 3,
-      pointBackgroundColor: "rgba(78, 115, 223, 1)",
-      pointBorderColor: "rgba(78, 115, 223, 1)",
+        lineTension: 0.3,
+        backgroundColor: "rgba(101, 172, 220)",
+        borderColor: "rgb(101, 172, 220)",
+      pointRadius: 6,
+      pointBackgroundColor: "rgb(20, 40, 188)",
+        pointBorderColor: "#FFFFFF",
       pointHoverRadius: 3,
-      pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-      pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+        pointHoverBackgroundColor: "rgb(101, 172, 220)",
+        pointHoverBorderColor: "rgb(101, 172, 220)",
       pointHitRadius: 10,
-      pointBorderWidth: 2,
-      data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+      pointBorderWidth: 3,
+      data: [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec],
     }],
   },
   options: {
@@ -78,20 +92,20 @@ var myLineChart = new Chart(ctx, {
           padding: 10,
           // Include a dollar sign in the ticks
           callback: function(value, index, values) {
-            return '$' + number_format(value);
+            return 'Rs.' + number_format(value);
           }
         },
         gridLines: {
-          color: "rgb(234, 236, 244)",
+            color: "rgb(101, 172, 220)",
           zeroLineColor: "rgb(234, 236, 244)",
           drawBorder: false,
-          borderDash: [2],
+          borderDash: [4],
           zeroLineBorderDash: [2]
         }
       }],
     },
-    legend: {
-      display: false
+      legend: {
+          display: true
     },
     tooltips: {
       backgroundColor: "rgb(255,255,255)",
@@ -110,7 +124,7 @@ var myLineChart = new Chart(ctx, {
       callbacks: {
         label: function(tooltipItem, chart) {
           var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+          return datasetLabel + ': Rs.' + number_format(tooltipItem.yLabel);
         }
       }
     }

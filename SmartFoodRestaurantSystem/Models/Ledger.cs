@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SmartFoodRestaurantSystem.Models
 {
@@ -9,5 +10,10 @@ namespace SmartFoodRestaurantSystem.Models
         public string SourceAccount { get; set; }
         public string DestinationAccount { get; set; }
         public string PaymentType { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
+        public int Amount { get; set; }
+        public string Description { get; set; }
     }
 }

@@ -1,0 +1,196 @@
+﻿@model SmartFoodRestaurantSystem.Models.Order
+@{
+    ViewData["Title"] = "CalculateProfit";
+}
+<style >
+    li {
+        list-style: none;
+        float: left;
+    }
+
+    #list > li {
+        padding-left: 35px;
+    }
+
+    .mnth {
+        margin-left: 15%;
+        padding-left: 30px;
+    }
+
+    h5 {
+        padding-top: 6px;
+        color: black;
+    }
+
+    #sale-values {
+        margin-left: 3%;
+    }
+
+    #purchase-values {
+        margin-left: 3%;
+    }
+
+    #sale-values > li {
+        margin-top: -7px;
+        float: left;
+        padding-left: 45px;
+    }
+
+    #purchase-values > li {
+        margin-top: -7px;
+        float: left;
+        padding-left: 45px;
+    }
+</style>
+<div class="container-fluid">
+
+    <div class="card mt-3 o-hidden border-0 my-1" id="print">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="p-4">
+                        <div class="text-center">
+                            <fieldset class="border p-1">
+                                <legend class="w-auto"> Profit & Loss Statement!     <span class="glyphicon glyphicon-print"></span></legend>
+                            </fieldset>
+                        </div>
+                        <h2 class="mt-1">Profit and Loss </h2>
+
+                        <h6>@DateTime.Now</h6>
+                        <div class="mnth">
+                            <ul id="list">
+                                <li>Jan</li>
+                                <li>Feb</li>
+                                <li>Mar</li>
+                                <li>Apr</li>
+                                <li>May</li>
+                                <li>Jun</li>
+                                <li>Jul</li>
+                                <li>Aug</li>
+                                <li>Sep</li>
+                                <li>Oct</li>
+                                <li>Nov</li>
+                                <li>Dec</li>
+
+                            </ul>
+                        </div>
+                        <br />
+                        <hr style="border: 2px solid black" />
+                        <div>
+                            <h5><b>Income:</b></h5>
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="row">
+                                <h6 style="padding-left: 60px">Sale Income</h6>
+
+                                <ul id="sale-values">
+
+                                    <li>@ViewBag.jan</li>
+                                    <li>@ViewBag.feb</li>
+                                    <li>@ViewBag.mar</li>
+                                    <li>@ViewBag.apr</li>
+                                    <li>@ViewBag.may</li>
+                                    <li>@ViewBag.jun</li>
+                                    <li>@ViewBag.jul</li>
+                                    <li>@ViewBag.aug</li>
+                                    <li>@ViewBag.sep</li>
+                                    <li>@ViewBag.oct</li>
+                                    <li>@ViewBag.nov</li>
+                                    <li>@ViewBag.dec</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="row" style="background-color:aquamarine;">
+
+
+                                <div class="col-md-2 sale">
+                                    <h5><b>Total Income</b></h5>
+
+                                </div>
+
+
+                                <div class="col-md-10 total-sale">
+
+                                    <h5 style="float:right">@ViewBag.Sale</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h5><b>Purchase:</b></h5>
+
+                        </div>
+                        <div>
+                            <div class="row">
+                                <h6 style="padding-left: 65px">Purch Amount</h6>
+
+                                <ul id="purchase-values">
+
+                                    <li>@ViewBag.janp</li>
+                                    <li>@ViewBag.febp</li>
+                                    <li>@ViewBag.marp</li>
+                                    <li>@ViewBag.aprp</li>
+                                    <li>@ViewBag.mayp</li>
+                                    <li>@ViewBag.junp</li>
+                                    <li>@ViewBag.julp</li>
+                                    <li>@ViewBag.augp</li>
+                                    <li>@ViewBag.sepp</li>
+                                    <li>@ViewBag.octp</li>
+                                    <li>@ViewBag.novp</li>
+                                    <li>@ViewBag.decp</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row" style="background-color:lightcoral;">
+
+
+                                <div class="col-md-3 sale">
+                                    <h5><b>Total Purchase</b></h5>
+
+                                </div>
+
+
+                                <div class="col-md-9 total-sale">
+
+                                    <h5 style="float:right">@ViewBag.Purchase</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h5><b>Profit:</b></h5>
+
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <div class="row" style="background-color:lightgreen;">
+
+
+                                <div class="col-md-2 sale">
+                                    <h5><b>Total Profit</b></h5>
+
+                                </div>
+
+
+                                <div class="col-md-10 total-sale">
+
+                                    <h5 style="float:right">@ViewBag.Profit</h5>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -19,9 +19,19 @@ namespace SmartFoodRestaurantSystem.Controllers
         }
 
         // GET: Ledgers
-        public async Task<IActionResult> Index()
+        public IActionResult index(string? id)
         {
-            return View(await _context.Ledger.ToListAsync());
+            if (id != null)
+            {
+                var searchLedger = _context.Ledger.Where(t => t.DestinationAccount == id || t.SourceAccount == id).ToList();
+                return View(searchLedger);
+            }
+            else
+            {
+                var LedgerList = _context.Ledger.ToList();
+                return View(LedgerList);
+            }
+
         }
 
         // GET: Ledgers/Details/5

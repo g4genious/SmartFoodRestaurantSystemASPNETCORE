@@ -17,20 +17,50 @@ namespace SmartFoodRestaurantSystem.Controllers
 
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ProducesController(SmartResturantContext context, IHostingEnvironment hostingEnvironment )
+        public ProducesController(SmartResturantContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
             _hostingEnvironment = hostingEnvironment;
         }
 
-       
+      public IActionResult CancelOrder(String id) {
+            
+                var order_Find = _context.Order.Find(Int32.Parse(id));
+                order_Find.Status = "Cancel";
+                _context.SaveChanges();
+
+                return RedirectToAction(nameof(Tablet));        
+        }
+
+
+
+        [HttpPost]
+        public IList<Produce> sidebar(string value)
+        {
+            if (value == "Menu:")
+            {
+                return (_context.Produce.ToList());
+            }
+            else if (value == "FastFood" || value == "DesiFood" || value == "Drinks")
+            {
+                var searchTopcategory = _context.Produce.Where(a => a.TopCategory.Contains(value)).ToList();
+                return (searchTopcategory);
+
+            }
+            var searcheddata = _context.Produce.Where(abc => abc.Category.Contains(value)).ToList();
+            return (searcheddata);
+        }
+
 
         // GET: Produces
         public async Task<IActionResult> Index()
         {
             return View(await _context.Produce.ToListAsync());
-           
+
         }
+
+
+       
         public IActionResult Tablet(string f = "")
         {
             if (f == "")
@@ -42,7 +72,7 @@ namespace SmartFoodRestaurantSystem.Controllers
 
             return View(searcheddata);
         }
-      
+
         // GET: Produces/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -79,7 +109,7 @@ namespace SmartFoodRestaurantSystem.Controllers
                 string UniqueFileName = null;
                 if (produce.Photo != null)
                 {
-                    string ImageFolder = Path.Combine(_hostingEnvironment.WebRootPath,"images");
+                    string ImageFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
                     UniqueFileName = Guid.NewGuid().ToString() + "_" + produce.Photo.FileName;
                     string filePath = Path.Combine(ImageFolder, UniqueFileName);
                     produce.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
@@ -92,19 +122,21 @@ namespace SmartFoodRestaurantSystem.Controllers
                     Description = produce.Description,
                     PriceFull = produce.PriceFull,
                     PriceHalf = produce.PriceHalf,
+                    PriceMedium = produce.PriceMedium,
                     CreatedBy = produce.CreatedBy,
                     CreatedDate = produce.CreatedDate,
+                    Category = produce.Category,
                     UpdatedBy = produce.UpdatedBy,
+                    TopCategory = produce.TopCategory,
                     UpdatedDate = produce.UpdatedDate,
                     Status = produce.Status
                 };
                 _context.Add(produce1);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create));
             }
             return View(produce);
         }
-
         // GET: Produces/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

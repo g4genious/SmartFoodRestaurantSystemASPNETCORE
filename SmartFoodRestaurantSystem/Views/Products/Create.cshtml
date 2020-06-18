@@ -4,49 +4,229 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<div class="container-fluid">
 
-<h4>Product</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+    <div class="card o-hidden border-0 shadow-lg  border-left-success mt-3">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="p-4">
+                        <div class="text-center">
+                            <fieldset class="border p-1">
+                                <legend class="w-auto"><i class="fas fa-shopping-cart" style="color:#1cc88a"></i> Add Purchase!</legend>
+                            </fieldset>
+                        </div>
+
+                        <form onsubmit="return submitData()">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                    <label asp-for="Supplier" class="control-label"></label><span class="text-danger">*</span>
+                                    <select asp-for="SupplierId" class="form-control" id="supplierName" asp-items="ViewBag.SupplierName"></select>
+                                    <span asp-validation-for="Supplier" class="text-danger"></span>
+
+                                </div>
+                                <div class="col-sm-2 mt-4">
+                                    <p> <a asp-action="Create" asp-controller="Suppliers">Add Supplier </a></p>
+
+
+                                </div>
+                                <div class="col-sm-2 mt-4">
+                                    <p> <a asp-action="Create" asp-controller="Categories" class="ml-4">Add Category</a></p>
+                                </div>
+                             
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                    <label asp-for="PurchaseDate" class="control-label"></label><span class="text-danger">*</span>
+                                    <input asp-for="PurchaseDate" value="@ViewBag.Date" class="form-control" disabled />
+                                    <span asp-validation-for="PurchaseDate" class="text-danger"></span>
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="Payment_Type" class="control-label"></label><span class="text-danger">*</span>
+                                    <select class="form-control" id="PaymentType">
+                                        <option value="Cash" onclick="enableField()">Cash</option>
+                                        <option value="Due" onclick="disableField()" id="due">Due</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="w3mission" asp-for="Details" id="itemDetail" class="control-label"></label>
+                                    <textarea id="w3mission" rows="1" cols="50" asp-for="Details" class="form-control">
+                                    </textarea>
+                                </div>
+                            </div>
+
+                            <table class="table table-bordered table-hover myTable" id="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" >Name<i class="text-danger">*</i></th>
+                                        <th class="text-center" >Unit</th>
+                                        <th class="text-center" >ExpiryDate</th>
+                                        <th class="text-center">Quantity<i class="text-danger">*</i></th>
+                                        <th class="text-center">Rate<i class="text-danger">*</i></th>
+                                        <th class="text-center" >Category</th>
+                                        <th class="text-center">Stock/Qnty</th>
+
+                                        <th class="text-center">SubTotal</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="applyTable">
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>
+                                            <input type="button" class="btn btn-success" value="Add More item" onclick="addRow()" tabindex="9">
+                                        </td>
+                                        <td style="text-align:right;" colspan="6"><b>Total:</b></td>
+                                        <td class="text-right">
+                                            <input type="text" class="text-right form-control" id="Total" asp-for="Total" readonly="readonly" value="0">
+                                        </td>
+                                    </tr>
+                                
+                                    <tr>
+                                        <td colspan="7" style="text-align:right;"><b>Paid Amount:</b></td>
+                                        <td class="text-right">
+                                            <input type="text" id="paidamount" class="text-right form-control" asp-for="Paid_Amount" placeholder="0">
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <div class="form-group row" style="float:right">
+                                <div class="col-sm-6">
+                                    <input type="submit" class="btn btn-success btn-large" value="Submit" id="submit">
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Unit" class="control-label"></label>
-                <input asp-for="Unit" class="form-control" />
-                <span asp-validation-for="Unit" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupplierId" class="control-label"></label>
-                <input asp-for="SupplierId" class="form-control" />
-                <span asp-validation-for="SupplierId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<table style="display:none" id="ch">
+    <tr><td><select class="form-control" id="Category" asp-items="ViewBag.CategoryName" ></select></td></tr>
+</table>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+
+        $('document').ready(function () { addRow(); });
+
+        let rowId = 1;
+        function addRow() {
+            $("#applyTable").append('<tr  id = "' + rowId + '"> <td class="span3 supplier"><input class="form-control" id="name" onchange="getStockQuantity(' + rowId + ')"/></td> <td><select class="form-control" style="width:70px" id="unit"><option value="Kg">Kg</option><option value="Liter">Liter</option><option value="Dozen">Dozen</option></select></td><td><input type="date" class="form-control search-field" id="expiryDate"  placeholder="ExpiryDate" ></td> <td><input class="form-control" id="quantity" value="0"  onchange="add(' + rowId + ')"></td> <td><input class="form-control" id="rate" value="0" onchange="add(' + rowId + ')"></td>');
+            var categories = $("#ch tr").children();
+            $("#" + rowId + " td").last().after(categories.clone(true));
+            $("#" + rowId + " td").last().after('<td><input class="form-control" readonly="readonly" id="stock_Quantity"/></td></td><td><input class="form-control" id="subtotal_product"  value="0" /><td><button class="btn btn-danger red" onclick="Remove(' + rowId + ')"><i class="fa fa-trash"></i></button></td></tr>');
+            rowId++;
+        }
+
+
+
+        function Remove(id) {
+
+            var productSubtotal = parseInt(document.getElementById(id).querySelector("#subtotal_product").value);
+            if (productSubtotal != null)
+                document.querySelector("#Total").value = parseInt(document.querySelector("#Total").value) - productSubtotal;
+
+            $('#' + id).remove();
+        };
+
+        function getStockQuantity(id) {
+            var Product_Number = document.getElementById(id).querySelector("#name").value;
+            $.ajax({
+                type: "POST",
+                url: "/Products/getProductStockQuantity",
+                data: {
+                    value: Product_Number
+                },
+                success: function (data) {
+                    document.getElementById(id).querySelector("#stock_Quantity").value = data;
+                    var category = document.getElementById("Category");
+                    document.getElementById(id).querySelector("#Category").value = category.options[category.selectedIndex].text;
+                }
+            });
+        }
+
+        function submitData() {
+            var ItemArray = new Array();
+
+            for (let id = 1; id < rowId; id++) {
+
+                if (document.getElementById(id) == null)
+                    continue;
+
+                var PurchaseItem = {};
+                PurchaseItem.Name = document.getElementById(id).querySelector("#name").value;
+                PurchaseItem.Unit = document.getElementById(id).querySelector("#unit").value;
+                PurchaseItem.ExpiryDate = document.getElementById(id).querySelector("#expiryDate").value;
+                PurchaseItem.Quantity = document.getElementById(id).querySelector("#quantity").value;
+                PurchaseItem.Rate = document.getElementById(id).querySelector("#rate").value;
+                var category = document.getElementById(id).querySelector("#Category");
+                PurchaseItem.CategoryId = category.options[category.selectedIndex].value;
+                PurchaseItem.SubTotal = document.getElementById(id).querySelector("#subtotal_product").value;
+                PurchaseItem.Total = document.querySelector("#Total").value;
+                //PurchaseItem.Grand_Total = document.querySelector("#GrandTotal").value;
+                PurchaseItem.Paid_Amount = document.querySelector("#paidamount").value;
+                PurchaseItem.SupplierId = document.querySelector("#supplierName").value;
+                PurchaseItem.Details = document.querySelector("#w3mission").value;
+                PurchaseItem.Payment_Type = document.querySelector("#PaymentType").value;
+                ItemArray.push(PurchaseItem);
+            }
+            document.querySelector("#Total").value = "0";
+            //document.querySelector("#GrandTotal").value = "0";
+            document.querySelector("#paidamount").value = "0";
+
+
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: "/Products/Create",
+                data: {
+                    product: ItemArray
+                },
+                success: function (r) {
+                    alert("record(s) inserted.");
+                    location.reload();
+                }
+            });
+
+            return false;
+        }
+
+        function add(id)
+
+        {
+            var quantity = parseInt(document.getElementById(id).querySelector("#quantity").value);
+            var rate = parseInt(document.getElementById(id).querySelector("#rate").value);
+
+            if (quantity == null || rate == null)
+                return;
+
+            var productSubtotal = parseInt(document.getElementById(id).querySelector("#subtotal_product").value);
+
+            if (productSubtotal != null)
+                document.querySelector("#Total").value = parseInt(document.querySelector("#Total").value) - productSubtotal;
+
+            document.getElementById(id).querySelector("#subtotal_product").value = quantity * rate;
+
+            document.querySelector("#Total").value = parseInt(document.querySelector("#Total").value) + (quantity * rate);
+        }
+
+        function disableField() {
+            console.log('HEllo');
+            document.querySelector('#paidamount').readOnly = true;
+        }
+        function enableField() {
+            console.log('HEllo');
+            document.querySelector('#paidamount').readOnly = false;
+        }
+
+    </script>
 }

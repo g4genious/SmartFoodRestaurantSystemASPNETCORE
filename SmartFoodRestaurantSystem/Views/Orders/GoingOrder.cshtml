@@ -5,36 +5,70 @@
     ViewData["Title"] = "GoingOrder";
 }
 <style>
-    .card{
-        width: 200px;
-        border: 1px solid #1cc88a;
+    .card::before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-top: 24px solid #1cc88a;
+        border-right: 24px solid transparent;
+        position: absolute;
+        left: 0;
+        top: 0;
     }
 
-    
+    .card {
+        width: 180px;
+    }
 </style>
+
+
+
 <h4 class="h4 text-gray-900 mb-4">On Going Order:</h4>
 <div class="container">
     <div class="col-md-12">
         <div class="card-deck">
             @foreach (var item in Model)
+
             {
-                <div class="row" style="padding: 3px">
-                    <div class="card parent_div">
-                        <div class="card-header">
-                            <h6 class="card-title" id="name">@item.Name</h6>
-                        </div>
-                        <div class="card-body">
-                            <p> Order ID : @item.Id</p>
-                            <p> TableNumber: @item.TableNumber</p>
-                        </div>
-                        <div class="card-footer">
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                            <a asp-action="Edit" asp-controller="OrderLists" asp-route-id="@item.Id">Payement</a> |
-                            <a asp-action="Show" asp-controller="OrderLists" asp-route-id="@item.Id">Print Bill</a>
+                @if (item.Status != "Completed")
+                {
+                    <div class="row" style="padding: 3px">
+                        <div class="card parent_div">
+                            <div class="card-header">
+                                <h6 class="card-title" id="name">@item.Name</h6>
+
+
+                            </div>
+                            <div class="card-body">
+                                @if (item.TableNumber == 12345)
+                                {
+                                    <p> Order : @item.Id</p>
+                                    <p> Order: Take Away</p>
+                                }
+                                else if (item.TableNumber == 123456)
+                                {
+                                    <p> Order : @item.Id</p>
+                                    <p> Order : Delivery</p>
+                                }
+                                else
+                                {
+                                    <p> Order : @item.Id</p>
+                                    <p> TableNumber: @item.TableNumber</p>
+                                }
+                            </div>
+                            <div class="card-footer">
+                                <a asp-action="Delete" asp-route-id="@item.Id">  <i class="fas fa-fw fa-trash"></i></a> |
+                                <a asp-action="Payment" asp-controller="OrderLists" asp-route-id="@item.Id"><i class="fas fa-fw fa-edit"></i></a> |
+                                <a asp-action="Show" asp-controller="OrderLists" asp-route-id="@item.Id"><i class="fas fa-fw fa-print"></i></a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
+
             }
         </div>
     </div>
 </div>
+
+
+

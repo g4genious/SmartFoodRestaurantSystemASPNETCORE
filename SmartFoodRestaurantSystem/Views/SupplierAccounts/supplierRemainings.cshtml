@@ -1,0 +1,70 @@
+﻿@model IEnumerable<SmartFoodRestaurantSystem.Models.SupplierAccount>
+
+@{
+    int Total = 0;
+    ViewData["Title"] = "supplierRemainings";
+}
+
+<h1 class="h4 text-gray-900 mt-2 mb-1">Supplier Remainings</h1>
+
+<div class="container-fluid">
+
+
+
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Supplier Remainings</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="example" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SupplierName)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Balance)
+                            </th>
+
+                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SupplierName)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Balance)
+                                </td>
+
+
+                            </tr>
+                            Total = Model.Sum(x => x.Balance);
+                        }
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+
+                            <td style="font-size:14px !Important">&nbsp; <b>Total</b></td>
+                            <td style=" border-right:  1px solid #e3e6f0"><b> @Total </b></td>
+                         
+                        </tr>
+                    </tfoot>
+
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,99 @@
+﻿
+@model SmartFoodRestaurantSystem.Models.OrderListViewDB
+
+@{
+    ViewData["Title"] = "Payment";
+}
+
+    <h4 class="h4 text-gray-900 mb-4 mt-2">Payement</h4>
+<div class="row justify-content-center">
+    <div class="col-md-9">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group row">
+                <div class="col-sm-4 mb-3 mb-sm-0">
+                    <label asp-for="OrderID" class="control-label"></label>
+                    <input asp-for="OrderID" class="form-control" readonly />
+                    <span asp-validation-for="OrderID" class="text-danger"></span>
+                </div>
+                <div class="col-sm-4">
+                    @if (ViewBag.TakeAway == 12345)
+                    {
+                        <label class="control-label">Order</label>
+                        <input value="Take Away" class="form-control" name="takeaway" />
+                        <span asp-validation-for="TableNumber" class="text-danger"></span>
+                    }
+                    else if (ViewBag.delivery == 123456)
+                    {
+                        <label class="control-label">Order</label>
+                        <input value="Delivery" class="form-control" />
+                        <span asp-validation-for="TableNumber" class="text-danger"></span>
+                    }
+                    else
+                    {
+                        <label asp-for="TableNumber" class="control-label"></label>
+                        <input asp-for="TableNumber" class="form-control" />
+                        <span asp-validation-for="TableNumber" class="text-danger"></span>
+                    }
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4 mb-3 mb-sm-0">
+                    <label asp-for="Date" class="control-label"></label>
+                    <input asp-for="Date" class="form-control" readonly />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+                <div class="col-sm-4">
+                    <label asp-for="TotalAmount" class="control-label"></label>
+                    <input asp-for="TotalAmount" class="form-control" id="a" readonly />
+                    <span asp-validation-for="TotalAmount" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4 mb-3 mb-sm-0">
+                    <label asp-for="Discount" class="control-label"></label>
+                    <input asp-for="Discount" class="form-control" id="d" onkeyup="add()"/>
+                    <span asp-validation-for="Discount" class="text-danger"></span>
+                </div>
+                <div class="col-sm-4">
+                    <label asp-for="ServiceCharges" class="control-label"></label>
+                    <input asp-for="ServiceCharges" class="form-control" id="b"  />
+                    <span asp-validation-for="ServiceCharges" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4 mb-3 mb-sm-0">
+                    <label asp-for="GrandTotal" class="control-label"></label>
+                    <input asp-for="GrandTotal" class="form-control" id="c" onkeyup="add()" />
+                    <span asp-validation-for="GrandTotal" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add Payement" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+
+       
+
+        function add() {
+            var x = parseInt(document.getElementById("a").value);
+            var y = parseInt(document.getElementById("b").value);
+            var z = parseInt(document.getElementById("d").value);
+            let Vat = parseInt(x * 0.05);
+            console.log(Vat);
+            document.getElementById("b").value = Vat;
+            document.getElementById("c").value = x + y - z;
+        }
+    </script>
+}
+

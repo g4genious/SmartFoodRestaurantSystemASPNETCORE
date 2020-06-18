@@ -1,51 +1,102 @@
-﻿@model IEnumerable<SmartFoodRestaurantSystem.Models.OrderDetail>
+﻿@model IEnumerable<SmartFoodRestaurantSystem.Models.KitchenViewDB>
 
 @{
     ViewData["Title"] = "Index";
+    
+    var x = true;
 }
 <style>
     .card {
-        width: 200px;
-        border: 1px solid yellow;
-        background-color:black;
+        width: 240px;
+        border: 2px solid yellow;
+        background-color: black;
+        padding: 7px;
+
     }
-    .card-header{
-        background-color:black;
+
+    .card-header {
+        background-color: black;
     }
-    p , h6 {
+    h1{
+        color: yellow
+    }
+    h6{
         color: white;
+        
+    }
+
+    p{
+        color: white;
+  margin-left: 20px;
+      
+    }
+    .card-deck{
+        padding: 10px;
+    }
+    #quantity{
+         margin-left: 30px;
     }
 </style>
 <div class="container-fluid">
-            <!-- Nested Row within Card Body -->
-            <div class="row">
-                <div class="col-lg-12">    
-                        <body style="background-color: black" onload="Javascript: loadref(10000)">
-                            <div class="card-deck">
-                                @foreach (var item in Model)
-                                {
-                                    <div class="row">
-                                        <div class="card parent_div">
-                                            <div  class="card-header">
-                                                <h6  class="card-title">Order</h6>
-                                            </div>
+    <!-- Nested Row within Card Body -->
+    <div class="row">
+        <div class="col-lg-12">
+            <body style="        background-color: black
+" onload="Javascript: loadref(10000)">
+                <div class="card-deck">
+                    @foreach (var group in Model.GroupBy(x => x.Id))
+                    {
+                    <div class="row">
+                        <div class="card parent_div">
+                            <div class="card-header">
 
-                                            <div class="card-body">
-                                                <p>   @Html.DisplayNameFor(model => model.Name) :     @Html.DisplayFor(modelItem => item.Name)</p>
-                                                <p>    @Html.DisplayNameFor(model => model.Quantity) :    @Html.DisplayFor(modelItem => item.Quantity)</p>
-
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
+                                <h1>Order</h1>
                             </div>
-                        </body>
-                    </div>
+
+                            @foreach (var item in group)
+                            {
+
+                                if (x == true)
+                                {
+                                    <div class="card-header">
+                                        @if (item.TableNumber == 12345)
+                                        {
+                                            <h6>Order :  TakeAway</h6>
+                                        }
+                                        else if (item.TableNumber == 123456)
+                                        {
+                                            <h6>Order :  Delivery</h6>
+                                        }
+                                        else
+                                        {
+                                            <h6>Table Number :  @Html.DisplayFor(modelItem => item.TableNumber)</h6>
+
+                                        }
+                                    </div>
+                                    x = false;
+
+                                }
+
+                                <div class="order-body">
+
+                                    <div class="row">
+                                        <p style="width:160px">@Html.DisplayFor(modelItem => item.Name) : <span style="color:red">@Html.DisplayFor(modelItem => item.Size)</span> </p> <p style="width:3px" id="quantity"> @Html.DisplayFor(modelItem => item.Quantity)</p>
+                                    </div>
+                                </div>
+
+                            }
+                            @{x = true;}
+                        </div>
+                        </div>
+              
+                    }
                 </div>
-            </div>
-    
-      
+            </body>
+        </div>
+    </div>
+</div>
+
+
 <script type="text/javascript">
     function loadref(time) {
         setTimeout("location.reload(true);", time);

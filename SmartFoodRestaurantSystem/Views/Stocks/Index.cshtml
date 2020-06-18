@@ -4,74 +4,64 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800 mt-2">Stock Out</h1>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Stock Out</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="example" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ProductName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.In_Quantity)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Out_Quantity)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.stock)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.In_Quantity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Out_Quantity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.stock)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Product.Id)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success" >Stock Out</a>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UnitPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SupplierId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AddedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExpiryDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UnitPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SupplierId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AddedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpiryDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

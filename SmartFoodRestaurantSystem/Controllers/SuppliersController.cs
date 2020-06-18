@@ -48,18 +48,27 @@ namespace SmartFoodRestaurantSystem.Controllers
             return View();
         }
 
-        // POST: Suppliers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,PhoneNumber,Company")] Supplier supplier)
+        public async Task<IActionResult> Create(Supplier supplier)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(supplier);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var searchSupplier = _context.Supplier.Where(t => t.PhoneNumber == supplier.PhoneNumber.ToString()).FirstOrDefault().PhoneNumber;
+                var searchSupplierAccount = _context.Account.Where(t => t.ID == searchSupplier).FirstOrDefault();
+                if (searchSupplierAccount == null)
+                {
+                    Account account = new Account();
+                    account.ID = supplier.PhoneNumber;
+                    account.Name = supplier.Name;
+                    account.Type = "Supplier";
+                    _context.Account.Add(account);
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(Create));
+                }
+                
             }
             return View(supplier);
         }

@@ -3,34 +3,47 @@
 @{
     ViewData["Title"] = "Details";
 }
+    <div class="container">
+        <div class="row my-2">
+            <div class="col-lg-8 order-lg-2">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>
+                    </li>
+               
+                </ul>
+                <div class="tab-content py-4">
+                    <div class="tab-pane active" id="profile">
+                        <h6><b>UserName:</b></h6>
+                        <p> @Html.DisplayFor(model => model.Name)</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6><b>Password</b></h6>
+                                <p>
+                                    @Html.DisplayFor(model => model.Password)
+                                </p>
+                                <h6><b>Role</b></h6>
+                                <p>
+                                    @Html.DisplayFor(model => model.Role)
+                                </p>
+                                <h6><b>Hobbies</b></h6>
+                                <p>
+                                    Indie music, skiing and hiking. I love the great outdoors.
+                                </p>
+                            </div>
+                          
+                        
+                        </div>
+                        <!--/row-->
+                    </div>
 
-<h1>Details</h1>
-
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Role)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Role)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+                   
+                </div>
+            </div>
+            <div class="col-lg-4 order-lg-1 text-center">
+                <img src="//placehold.it/150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+                <h6 class="mt-2">Photo</h6>
+               
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,151 @@
+﻿@model IEnumerable<SmartFoodRestaurantSystem.Models.Product>
+
+@{
+    ViewData["Title"] = "PurchaseReport";
+ 
+     
+}
+
+<style>
+    .card::before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-top: 24px solid #1cc88a;
+        border-right: 24px solid transparent;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+</style>
+    <h1 class="h4 text-gray-900 mt-2 mb-1">Purchase Report</h1>
+    <div class="container-fluid">
+        <div class="card  my-2">
+         
+            <div class="card-body">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div style="border: 1px solid rgba(128, 128, 128, 0.17)">
+                            <div class="p-4">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-1">Purchase Report!</h1>
+                                </div>
+                                <form class="navbar-search" action="/Products/PurchaseReport">
+
+                                    <div class="form-group row">
+                                        <div class="col-sm-4 mb-1">
+
+                                            <label class="control-label">From:</label>
+                                            <input type="date" class="form-control search-field" name="dateFrom" placeholder="From" />
+                                        </div>
+                                        <div class="col-sm-4 ">
+                                            <label class="control-label">To:</label>
+                                            <input type="date" class="form-control search-field" name="dateTo" placeholder="To" />
+                                        </div>
+                                        <div class="col-sm-4 " style="margin-top: 7px;">
+
+                                            <button type="submit" style="border-radius: 0px;" class="btn btn-success mt-4">Search</button>
+
+                                          
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+            <!-- DataTales Example -->
+            <div id="table" class="card  mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Purchase Report</h6>
+                </div>
+        
+                    <div  class="card-body">
+                        <div class="row justify-content-center">
+
+                            <div>
+                                <h4 class="h4 text-gray-900 mb-1">Al-Fajar Family Restaurant</h4>
+                                <h6 class="h6 text-gray-900 mb-1">Sambrial Road Sialkot</h6>
+                                <h6 class="h6 text-gray-900 mb-1">Tel: 052-3560049  0334-29644116</h6>
+
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+
+                            <table  class="table table-bordered table-striped " id="example"    width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Name)
+                                        </th>
+
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.PurchaseDate)
+                                        </th>
+
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Supplier)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Paid_Amount)
+                                        </th>
+                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Name)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PurchaseDate)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Supplier.Name)
+                                            </td>
+
+                                            <td class="price">
+                                                @Html.DisplayFor(modelItem => item.Paid_Amount)
+                                            </td>
+
+                                     
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" align="right" style="text-align:right;font-size:14px !Important">&nbsp; <b>Grand Total</b></td>
+                                        <td style="text-align: right;" ><b id="grandtotal"></b></td>
+                            
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        @section Scripts{
+            <script>
+                var sum = 0;
+$('.price').each(function() {
+    sum += parseFloat($(this).text());
+});
+$('#grandtotal').html(sum)
+                     
+</script>
+
+           
+        }

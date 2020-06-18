@@ -18,24 +18,25 @@ namespace SmartFoodRestaurantSystem.Controllers
         {
             _context = context;
         }
-
+        //Showing Tables 
         [HttpGet]
         public IActionResult DinningTables()
         {
+            ViewBag.TablesData = _context.Order.Where(t => t.Status == "pending").ToList();
             return View();
         }
+
         // GET: GoingOrders
-        public async Task<IActionResult> GoingOrder()
+        public IActionResult GoingOrder()
         {
-            return View(await _context.Order.ToListAsync());
+            var pending_Orders = _context.Order.Where(t => t.Status == "pending").ToList();
+            return View(pending_Orders);
         }
-
-      
-
-
 
         public IActionResult DinningTablesPost(int id)
         {
+           
+     
             HttpContext.Session.SetInt32("TableNumber", id);
             return RedirectToAction("Create", "Customers");
         }
@@ -80,14 +81,16 @@ namespace SmartFoodRestaurantSystem.Controllers
 
             return View(order);
         }
-       
+
 
         // GET: Orders/Create
         public IActionResult Create()
         {
             return View();
         }
-   [HttpPost]
+
+
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Order order)
         {
@@ -96,8 +99,20 @@ namespace SmartFoodRestaurantSystem.Controllers
             {
                 order.TableNumber = HttpContext.Session.GetInt32("TableNumber");
                 order.Date = DateTime.Now;
+                order.Status = "Pending";
+                var search = _context.Account.Where(temp => temp.ID == order.CustomerId).FirstOrDefault();
+                if (search == null)
+                {
+                    Account account = new Account();
+                    account.ID = order.CustomerId;
+                    account.Name = order.Name;
+                    account.Type = "Customer";
+                    _context.Account.Add(account);
+                    _context.SaveChanges();
+                }
                 _context.Add(order);
                 await _context.SaveChangesAsync();
+
                 HttpContext.Session.SetString("id", order.Id.ToString());
                 return RedirectToAction("Tablet", "Produces");
             }
@@ -180,7 +195,7 @@ namespace SmartFoodRestaurantSystem.Controllers
             var order = await _context.Order.FindAsync(id);
             _context.Order.Remove(order);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(GoingOrder));
         }
 
         private bool OrderExists(int id)

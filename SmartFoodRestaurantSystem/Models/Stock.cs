@@ -6,13 +6,14 @@ namespace SmartFoodRestaurantSystem.Models
     public partial class Stock
     {
         public int Id { get; set; }
-        public int? UnitPrice { get; set; }
         public int? ProductId { get; set; }
-        public int? SupplierId { get; set; }
-        public int? CategoryId { get; set; }
-        public string AddedBy { get; set; }
-        public DateTime? Date { get; set; }
-        public int? Quantity { get; set; }
-        public DateTime? ExpiryDate { get; set; }
+
+        public String ProductName { get; set; }
+        public int In_Quantity { get; set; }
+        public int Out_Quantity { get; set; }
+        public int stock { get; set; }
+        public virtual Product Product { get; set; }
+
+     
     }
 }

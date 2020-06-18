@@ -1,0 +1,85 @@
+﻿@model IEnumerable<SmartFoodRestaurantSystem.Models.Stock>
+
+@{
+    ViewData["Title"] = "Stock Report";
+}
+<style >
+   
+        .card::before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-top: 24px solid #1cc88a;
+            border-right: 24px solid transparent;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+<h1 class="h4 text-gray-900 mb-1 mt-2">Stock Report</h1>
+
+<div class="container-fluid">
+
+
+    <div id="table">
+        <!-- DataTales Example -->
+        <div class="card  mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Stock Report</h6>
+            </div>
+            <div class="card-body">
+                <div class="row justify-content-center">
+
+                    <div>
+                        <h4 class="h4 text-gray-900 mb-1">Al-Fajar Family Restaurant</h4>
+                        <h6 class="h6 text-gray-900 mb-1">Sambrial Road Sialkot</h6>
+                        <h6 class="h6 text-gray-900 mb-1">Tel: 052-3560049  0334-29644116</h6>
+
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="example" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.In_Quantity)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Product)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Out_Quantity)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.stock)
+                                </th>
+                       
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.In_Quantity)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ProductName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Out_Quantity)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.stock)
+                                    </td>
+                               
+                                </tr>
+                            }
+                        </tbody>
+                     
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,9 +2,13 @@
 
 @{
     ViewData["Title"] = "Tablet";
+
 }
 
-<h1 class="h4 text-gray-900 mb-1">Menu</h1>
+
+
+
+<h1 class="h4 text-gray-900 mt-2 mb-1">Menu</h1>
 
 <div class="container-fluid">
 
@@ -18,7 +22,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="example" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>
@@ -28,76 +32,92 @@
                                 @Html.DisplayNameFor(model => model.Description)
                             </th>
                             @*<th>
-                                    @Html.DisplayNameFor(model => model.PhotoUrl)
-                                </th>*@
-                            @*<th>
-                                    @Html.DisplayNameFor(model => model.PriceHalf)
-                                </th>*@
+            @Html.DisplayNameFor(model => model.PhotoUrl)
+        </th>*@
+                            <th>
+            @Html.DisplayNameFor(model => model.PriceHalf)
+        </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TopCategory)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PriceMedium)
+                            </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.PriceFull)
                             </th>
-                            <th>
+                            @*<th>
                                 @Html.DisplayNameFor(model => model.CreatedBy)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.CreatedDate)
-                            </th>
+                            </th>*@
                             @*<th>
-                                    @Html.DisplayNameFor(model => model.UpdatedBy)
-                                </th>*@
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>*@
                             @*<th>
-                                    @Html.DisplayNameFor(model => model.UpdatedDate)
-                                </th>*@
-                            <th>
+            @Html.DisplayNameFor(model => model.UpdatedBy)
+        </th>*@
+                            @*<th>
+            @Html.DisplayNameFor(model => model.UpdatedDate)
+        </th>*@
+                            @*<th>
                                 @Html.DisplayNameFor(model => model.Status)
-                            </th>
+                            </th>*@
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Description)
-                                </td>
-                                @*<td>
-                                        @Html.DisplayFor(modelItem => item.PhotoUrl)
-                                    </td>*@
-                                @*<td>
-                                        @Html.DisplayFor(modelItem => item.PriceHalf)
-                                    </td>*@
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PriceFull)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CreatedBy)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CreatedDate)
-                                </td>
-                                @*<td>
-                                        @Html.DisplayFor(modelItem => item.UpdatedBy)
-                                    </td>*@
-                                @*<td>
-                                        @Html.DisplayFor(modelItem => item.UpdatedDate)
-                                    </td>*@
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Status)
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-facebook">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            @*<td>
+            @Html.DisplayFor(modelItem => item.PhotoUrl)
+        </td>*@
+                            <td>
+            @Html.DisplayFor(modelItem => item.PriceHalf)
+        </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TopCategory)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PriceMedium)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PriceFull)
+                            </td>
+
+
+                            @*<td>
+                                @Html.DisplayFor(modelItem => item.CreatedBy)
+                            </td>*@
+                            @*<td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>*@
+                            @*<td>
+            @Html.DisplayFor(modelItem => item.UpdatedBy)
+        </td>*@
+                            @*<td>
+            @Html.DisplayFor(modelItem => item.UpdatedDate)
+        </td>*@
+                            @*<td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>*@
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a> |
+                                <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-eye"></i></a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-</div>  
+
+</div>
+
